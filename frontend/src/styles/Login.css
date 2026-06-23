@@ -124,3 +124,14 @@ body {
 .show-btn:hover {
   color: #2563eb;
 }
+
+.error-text {
+  color: #ef4444;
+  background: #fee2e2;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 12px;
+  text-align: center;
+  border: 1px solid #fecaca;
+}

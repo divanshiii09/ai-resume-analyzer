@@ -11,6 +11,7 @@ function Register() {
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   function handleRegister() {
     if (name === "") {
       setError("Please enter your name");
@@ -46,12 +47,20 @@ function Register() {
 
     alert("Registration Successful");
   }
+
   return (
     <div className="login-container">
       <div className="login-card">
         <h1 className="logo">ResumeAI</h1>
 
         <p className="subtitle">Create your account</p>
+
+        {/* PROFESSIONAL ERROR UI (same as Login) */}
+        {error && (
+          <p className="error-text">
+            {error}
+          </p>
+        )}
 
         <input
           className="input-field"
@@ -69,6 +78,7 @@ function Register() {
           onChange={(e) => setEmail(e.target.value)}
         />
 
+        {/* PASSWORD */}
         <div className="password-container">
           <input
             className="input-field"
@@ -86,6 +96,8 @@ function Register() {
             {showPassword ? <FaEyeSlash /> : <FaEye />}
           </button>
         </div>
+
+        {/* CONFIRM PASSWORD */}
         <div className="password-container">
           <input
             className="input-field"
@@ -98,21 +110,14 @@ function Register() {
           <button
             type="button"
             className="show-btn"
-            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            onClick={() =>
+              setShowConfirmPassword(!showConfirmPassword)
+            }
           >
             {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
           </button>
         </div>
-        {error && (
-          <p
-            style={{
-              color: "red",
-              marginBottom: "10px",
-            }}
-          >
-            {error}
-          </p>
-        )}
+
         <button className="login-btn" onClick={handleRegister}>
           Create Account
         </button>

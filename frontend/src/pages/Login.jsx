@@ -10,31 +10,37 @@ function Login() {
   const [error, setError] = useState("");
 
   function handleLogin() {
+    if (email === "") {
+      setError("Please enter email");
+      return;
+    }
 
-  if (email === "") {
-    setError("Please enter email");
-    return;
+    if (password === "") {
+      setError("Please enter password");
+      return;
+    }
+
+    setError("");
+
+    console.log(email);
+    console.log(password);
+
+    alert("Login Successful");
   }
-
-  if (password === "") {
-    setError("Please enter password");
-    return;
-  }
-
-  setError("");
-
-  console.log(email);
-  console.log(password);
-
-  alert("Login Successful");
-}
 
   return (
     <div className="login-container">
       <div className="login-card">
+
         <h1 className="logo">ResumeAI</h1>
 
         <p className="subtitle">Sign in to continue</p>
+
+        {error && (
+          <p className="error-text">
+            {error}
+          </p>
+        )}
 
         <input
           className="input-field"
@@ -46,33 +52,35 @@ function Login() {
 
         <div className="password-container">
 
-  <input
-    className="input-field"
-    type={showPassword ? "text" : "password"}
-    placeholder="Password"
-    value={password}
-    onChange={(e) => setPassword(e.target.value)}
-  />
+          <input
+            className="input-field"
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
-  <button
-    type="button"
-    className="show-btn"
-    onClick={() => setShowPassword(!showPassword)}
-  >
-    {showPassword ? <FaEyeSlash /> : <FaEye />}
-  </button>
+          <button
+            type="button"
+            className="show-btn"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </button>
 
-</div>
-{error && <p>{error}</p>}
+        </div>
+
         <button className="login-btn" onClick={handleLogin}>
           Sign In
         </button>
+
         <p style={{ textAlign: "center", marginTop: "15px" }}>
-  Don't have an account?{" "}
-  <Link to="/register">
-    Register
-  </Link>
-</p>
+          Don't have an account?{" "}
+          <Link to="/register">
+            Register
+          </Link>
+        </p>
+
       </div>
     </div>
   );
