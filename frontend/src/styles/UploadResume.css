@@ -1,0 +1,90 @@
+.upload-page {
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: #f8fafc;
+}
+
+.upload-card {
+  width: 700px;
+
+  background: white;
+
+  padding: 40px;
+
+  border-radius: 20px;
+
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+
+  text-align: center;
+}
+
+.upload-card h1 {
+  margin-bottom: 10px;
+}
+
+.upload-card p {
+  color: #64748b;
+}
+
+.drop-zone {
+  margin-top: 35px;
+
+  border: 2px dashed #2563eb;
+  border-radius: 15px;
+
+  padding: 50px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 15px;
+}
+
+.choose-btn {
+  margin-top: 20px;
+
+  background: #2563eb;
+
+  color: white;
+
+  border: none;
+
+  padding: 12px 20px;
+
+  border-radius: 10px;
+
+  cursor: pointer;
+}
+
+.choose-btn:hover {
+  background: #1d4ed8;
+}
+
+small {
+  display: block;
+  margin-top: 20px;
+  color: #64748b;
+}
+.upload-title {
+  font-size: 36px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.upload-description {
+  margin-top: 12px;
+  line-height: 1.7;
+  color: #64748b;
+}
+
+
+.drop-zone h3 {
+  color: #1e293b;
+  font-size: 22px;
+}

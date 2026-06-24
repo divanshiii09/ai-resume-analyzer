@@ -23,6 +23,11 @@ function Register() {
       return;
     }
 
+    if (!isValidEmail(email)) {
+      setError("Please enter a valid email address");
+      return;
+    }
+
     if (password === "") {
       setError("Please enter password");
       return;
@@ -48,6 +53,9 @@ function Register() {
     alert("Registration Successful");
   }
 
+  function isValidEmail(email) {
+  return /\S+@\S+\.\S+/.test(email);
+}
   return (
     <div className="login-container">
       <div className="login-card">
@@ -55,7 +63,6 @@ function Register() {
 
         <p className="subtitle">Create your account</p>
 
-        {/* PROFESSIONAL ERROR UI (same as Login) */}
         {error && (
           <p className="error-text">
             {error}
@@ -78,7 +85,6 @@ function Register() {
           onChange={(e) => setEmail(e.target.value)}
         />
 
-        {/* PASSWORD */}
         <div className="password-container">
           <input
             className="input-field"
@@ -97,7 +103,6 @@ function Register() {
           </button>
         </div>
 
-        {/* CONFIRM PASSWORD */}
         <div className="password-container">
           <input
             className="input-field"

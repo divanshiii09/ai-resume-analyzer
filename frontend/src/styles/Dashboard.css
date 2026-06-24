@@ -1,0 +1,108 @@
+.dashboard-container {
+  min-height: 100vh;
+  background-color: #f8fafc;
+  padding: 40px;
+}
+
+.dashboard-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.welcome-text {
+  color: #64748b;
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.stat-card {
+  background: white;
+  padding: 24px;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.stat-card {
+  background: white;
+  padding: 24px;
+  border-radius: 16px;
+
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+
+.stat-card p {
+  font-size: 32px;
+  font-weight: bold;
+  color: #2563eb;
+  margin-top: 10px;
+}
+
+.upload-section {
+  margin-top: 30px;
+}
+
+.upload-btn {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 14px 24px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.upload-btn:hover {
+  background: #1d4ed8;
+}
+
+.recent-section {
+  margin-top: 40px;
+}
+
+.resume-card {
+  background: white;
+  padding: 16px;
+  border-radius: 10px;
+  margin-top: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.header-section {
+  margin-bottom: 30px;
+}
+
+.dashboard-title {
+  font-size: 36px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.welcome-text {
+  font-size: 16px;
+  color: #64748b;
+  margin-top: 8px;
+}
+
+.dashboard-subtitle {
+  font-size: 18px;
+  color: #475569;
+  margin-top: 6px;
+  font-weight: 500;
+}
+
+.description-text {
+  margin-top: 8px;
+  color: #64748b;
+}

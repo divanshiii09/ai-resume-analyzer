@@ -15,6 +15,10 @@ function Login() {
       return;
     }
 
+    if (!isValidEmail(email)) {
+      setError("Please enter a valid email address");
+      return;
+    } 
     if (password === "") {
       setError("Please enter password");
       return;
@@ -27,6 +31,10 @@ function Login() {
 
     alert("Login Successful");
   }
+
+  function isValidEmail(email) {
+  return /\S+@\S+\.\S+/.test(email);
+}
 
   return (
     <div className="login-container">
