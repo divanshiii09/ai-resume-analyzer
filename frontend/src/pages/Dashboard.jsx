@@ -1,25 +1,50 @@
 import "../styles/Dashboard.css";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 function Dashboard() {
   const navigate = useNavigate();
 
+  const [backendMessage, setBackendMessage] = useState("");
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/api/test")
+      .then((res) => {
+        console.log("Backend Response:", res.data);
+        setBackendMessage(res.data.message);
+      })
+      .catch((err) => {
+        console.log("Error:", err);
+        setBackendMessage("Backend not connected");
+      });
+  }, []);
+
   return (
     <div className="dashboard-container">
-<div className="header-section">
-  <h1 className="dashboard-title">ResumeAI</h1>
 
-  <h2 className="dashboard-subtitle">
-    AI-Powered Resume Analysis Platform
-  </h2>
+      <div className="header-section">
+        <h1 className="dashboard-title">ResumeAI</h1>
 
-  <p className="welcome-text">
-    Welcome back, Divanshi 👋
-  </p>
-<p className="description-text">
-    Track your resume performance and improve your ATS score.
-  </p>
-</div>
+        <h2 className="dashboard-subtitle">
+          AI-Powered Resume Analysis Platform
+        </h2>
+
+        <p className="welcome-text">
+          Welcome back, Divanshi 👋
+        </p>
+
+        <p className="description-text">
+          Track your resume performance and improve your ATS score.
+        </p>
+
+        {/* 👇 NEW: Backend test output */}
+        <p style={{ color: "green", marginTop: "10px" }}>
+          Backend Status: {backendMessage}
+        </p>
+      </div>
+
       <div className="stats-grid">
 
         <div className="stat-card">
@@ -40,7 +65,10 @@ function Dashboard() {
       </div>
 
       <div className="upload-section">
-        <button className="upload-btn" onClick={() => navigate("/upload")}>
+        <button
+          className="upload-btn"
+          onClick={() => navigate("/upload")}
+        >
           Upload Resume
         </button>
       </div>
@@ -59,6 +87,7 @@ function Dashboard() {
         <div className="resume-card">
           Data Analyst Resume.pdf - ATS Score: 88
         </div>
+
       </div>
 
     </div>
