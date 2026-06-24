@@ -8,6 +8,9 @@ function Dashboard() {
 
   const [backendMessage, setBackendMessage] = useState("");
 
+  const userName =
+    localStorage.getItem("userName") || "User";
+
   useEffect(() => {
     axios
       .get("http://localhost:3000/api/test")
@@ -23,30 +26,35 @@ function Dashboard() {
 
   return (
     <div className="dashboard-container">
-
       <div className="header-section">
-        <h1 className="dashboard-title">ResumeAI</h1>
+        <h1 className="dashboard-title">
+          ResumeAI
+        </h1>
 
         <h2 className="dashboard-subtitle">
           AI-Powered Resume Analysis Platform
         </h2>
 
         <p className="welcome-text">
-          Welcome back, Divanshi 👋
+          Welcome back, {userName} 👋
         </p>
 
         <p className="description-text">
-          Track your resume performance and improve your ATS score.
+          Track your resume performance and improve
+          your ATS score.
         </p>
 
-        {/* 👇 NEW: Backend test output */}
-        <p style={{ color: "green", marginTop: "10px" }}>
+        <p
+          style={{
+            color: "green",
+            marginTop: "10px",
+          }}
+        >
           Backend Status: {backendMessage}
         </p>
       </div>
 
       <div className="stats-grid">
-
         <div className="stat-card">
           <h3>Total Analyses</h3>
           <p>25</p>
@@ -61,7 +69,6 @@ function Dashboard() {
           <h3>Resumes Uploaded</h3>
           <p>12</p>
         </div>
-
       </div>
 
       <div className="upload-section">
@@ -77,7 +84,8 @@ function Dashboard() {
         <h2>Recent Analyses</h2>
 
         <div className="resume-card">
-          Software Engineer Resume.pdf - ATS Score: 85
+          Software Engineer Resume.pdf - ATS
+          Score: 85
         </div>
 
         <div className="resume-card">
@@ -85,11 +93,10 @@ function Dashboard() {
         </div>
 
         <div className="resume-card">
-          Data Analyst Resume.pdf - ATS Score: 88
+          Data Analyst Resume.pdf - ATS Score:
+          88
         </div>
-
       </div>
-
     </div>
   );
 }
