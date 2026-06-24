@@ -16,8 +16,7 @@ function Dashboard() {
   <p className="welcome-text">
     Welcome back, Divanshi 👋
   </p>
-
-  <p className="description-text">
+<p className="description-text">
     Track your resume performance and improve your ATS score.
   </p>
 </div>
