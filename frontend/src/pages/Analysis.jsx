@@ -15,7 +15,9 @@ function Analysis() {
 
   <h2>82%</h2>
 
-  <p>ATS Compatibility Score</p>
+<p className="score-title">
+  ATS Compatibility Score
+</p>
  <span className="score-status">
     Excellent Match
   </span>
@@ -73,13 +75,21 @@ function Analysis() {
         <div className="suggestion-box">
           <h3>Suggestions</h3>
 
-          <ul>
-            <li>✅ Add more action verbs.</li>
-            <li>✅ Include measurable achievements.</li>
-            <li>✅ Improve keyword matching.</li>
-          </ul>
-        </div>
+        <div className="suggestion-item">
+  ✅ Add more action verbs
+</div>
 
+<div className="suggestion-item">
+  ✅ Include measurable achievements
+</div>
+
+<div className="suggestion-item">
+  ✅ Improve keyword matching
+</div>
+        </div>
+<button className="secondary-btn">
+  Upload Another Resume
+</button>
       </div>
     </div>
   );

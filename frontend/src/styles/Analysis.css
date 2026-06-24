@@ -27,7 +27,13 @@
 .analysis-card p {
   color: #64748b;
 }
+.score-title {
+  font-size: 18px;
 
+  font-weight: 600;
+
+  color: #334155;
+}
 .score-box {
   margin-top: 25px;
 
@@ -79,6 +85,17 @@
 .suggestion-box ul {
   margin-top: 10px;
   padding-left: 20px;
+}
+.suggestion-item {
+  padding: 14px;
+
+  margin-top: 10px;
+
+  background: white;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 10px;
 }
 .metrics-section {
   margin-top: 25px;
@@ -133,4 +150,28 @@
   font-size: 14px;
 
   font-weight: 600;
+}
+.secondary-btn {
+  width: 100%;
+
+  margin-top: 20px;
+
+  padding: 14px;
+
+  background: white;
+
+  color: #2563eb;
+
+  border: 1px solid #2563eb;
+
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  font-size: 15px;
+
+  font-weight: 600;
+}
+.secondary-btn:hover {
+  background: #eff6ff;
 }
