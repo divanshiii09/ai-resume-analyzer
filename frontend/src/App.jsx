@@ -4,7 +4,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import UploadResume from "./pages/UploadResume";
-
+import Analysis from "./pages/Analysis";
 function App() {
   return (
     <BrowserRouter>
@@ -15,6 +15,7 @@ function App() {
 
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/upload" element={<UploadResume />} />
+        <Route path="/analysis" element={<Analysis />} />
       </Routes>
     </BrowserRouter>
   );

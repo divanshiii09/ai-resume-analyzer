@@ -1,0 +1,136 @@
+.analysis-page {
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: #f8fafc;
+}
+
+.analysis-card {
+  width: 800px;
+
+  background: white;
+
+  padding: 40px;
+
+  border-radius: 20px;
+
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.analysis-card h1 {
+  margin-bottom: 10px;
+}
+
+.analysis-card p {
+  color: #64748b;
+}
+
+.score-box {
+  margin-top: 25px;
+
+  background: linear-gradient(135deg, #dbeafe, #eff6ff);
+
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.08);
+
+  border: 1px solid #bfdbfe;
+
+  border-radius: 20px;
+
+  padding: 50px 30px;
+
+  text-align: center;
+}
+.score-box h2 {
+  font-size: 90px;
+  line-height: 1;
+  color: #2563eb;
+
+  margin: 0;
+
+  font-weight: 700;
+}
+.score-box p {
+  margin-top: 15px;
+
+  color: #475569;
+
+  font-size: 16px;
+
+  font-weight: 500;
+}
+.score-note {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #64748b;
+}
+.suggestion-box {
+  margin-top: 25px;
+
+  background: #f8fafc;
+
+  padding: 20px;
+
+  border-radius: 12px;
+}
+
+.suggestion-box ul {
+  margin-top: 10px;
+  padding-left: 20px;
+}
+.metrics-section {
+  margin-top: 25px;
+}
+
+.metric {
+  margin-bottom: 20px;
+}
+.progress-bar {
+  width: 100%;
+  height: 12px;
+
+  background: #e2e8f0;
+
+  border-radius: 999px;
+
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+
+  background: #2563eb;
+
+  border-radius: 999px;
+}
+.metric-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 8px;
+
+  font-weight: 600;
+}
+.metric-header span:last-child {
+  color: #2563eb;
+  font-weight: 700;
+}
+.score-status {
+  display: inline-block;
+
+  margin-top: 12px;
+
+  padding: 8px 16px;
+
+  background: #dcfce7;
+
+  color: #15803d;
+
+  border-radius: 999px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+}

@@ -17,7 +17,7 @@
 
   border-radius: 20px;
 
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 
   text-align: center;
 }
@@ -83,8 +83,70 @@ small {
   color: #64748b;
 }
 
-
 .drop-zone h3 {
   color: #1e293b;
   font-size: 22px;
+}
+
+.file-info {
+  width: 100%;
+  overflow-wrap: break-word;
+
+  margin-top: 20px;
+  padding: 20px;
+
+  background: #eff6ff;
+
+  border: 1px solid #bfdbfe;
+  border-radius: 12px;
+
+  text-align: left;
+}
+
+.file-info h4 {
+  color: #16a34a;
+  margin-bottom: 12px;
+}
+
+.file-info p {
+  margin: 8px 0;
+  color: #334155;
+}
+
+.upload-error {
+  margin-top: 15px;
+
+  background: #fef2f2;
+
+  color: #dc2626;
+
+  padding: 12px;
+
+  border-radius: 10px;
+
+  border: 1px solid #fecaca;
+}
+.file-name {
+  word-break: break-word;
+}
+.analyze-btn {
+  margin-top: 20px;
+
+  background: #2563eb;
+  color: white;
+
+  border: none;
+
+  padding: 14px 24px;
+
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.analyze-btn:hover {
+  background: #1d4ed8;
 }
