@@ -224,3 +224,29 @@ res.status(500).json({
 
 }
 });
+
+// ---------------- GET LATEST RESUME BY EMAIL ---------------- */
+app.get(
+"/api/resume/latest/:email",
+async (req, res) => {
+try {
+const resume =
+await Resume.findOne({
+userEmail:
+req.params.email,
+}).sort({
+createdAt: -1,
+});
+
+
+  res.json(resume);
+} catch (error) {
+  console.log(error);
+
+  res.status(500).json({
+    message: "Server error",
+  });
+}
+
+}
+);

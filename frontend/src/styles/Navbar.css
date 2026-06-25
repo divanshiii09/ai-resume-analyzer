@@ -53,3 +53,19 @@
 .nav-logout:hover {
   opacity: 0.9;
 }
+
+.nav-analysis {
+background: transparent;
+border: none;
+
+color: #334155;
+
+font-size: 16px;
+font-weight: 500;
+
+cursor: pointer;
+}
+
+.nav-analysis:hover {
+color: #2563eb;
+}
