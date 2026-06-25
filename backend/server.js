@@ -1,10 +1,12 @@
+require("dotenv").config();
+const connectDB = require("./config/db");
 const express = require("express");
 const cors = require("cors");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const app = express();
-
+connectDB();
 app.use(cors());
 app.use(express.json()); // IMPORTANT for reading JSON body
 
