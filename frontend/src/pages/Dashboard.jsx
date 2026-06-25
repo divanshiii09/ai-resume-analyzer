@@ -39,10 +39,10 @@ return (
         Welcome back, {userName} 👋
       </p>
 
-      <p className="description-text">
-        Track your resume performance and
-        improve your ATS score.
-      </p>
+     <p className="description-text">
+  Upload resumes, track ATS performance,
+  and improve your chances of getting interviews.
+</p>
 
     </div>
 
