@@ -31,7 +31,7 @@
 
 .stat-card {
   background: white;
-  padding: 24px;
+  padding: 32px;
   border-radius: 16px;
 
   box-shadow: 0 10px 25px rgba(0,0,0,0.08);
@@ -44,10 +44,10 @@
 }
 
 .stat-card p {
-  font-size: 32px;
-  font-weight: bold;
+  font-size: 40px;
+  font-weight: 700;
   color: #2563eb;
-  margin-top: 10px;
+  margin-top: 12px;
 }
 
 .upload-section {
@@ -126,4 +126,33 @@
 
 .logout-btn:hover {
   transform: translateY(-2px);
+}
+.quick-actions {
+  display: flex;
+  gap: 15px;
+
+  margin-top: 25px;
+  margin-bottom: 35px;
+}
+
+.action-btn {
+  background: white;
+
+  color: #2563eb;
+
+  border: 1px solid #2563eb;
+
+  padding: 14px 24px;
+
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  font-size: 16px;
+
+  font-weight: 600;
+}
+
+.action-btn:hover {
+  background: #eff6ff;
 }

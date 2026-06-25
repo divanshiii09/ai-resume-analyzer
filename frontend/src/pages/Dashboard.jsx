@@ -43,7 +43,21 @@ return (
   Upload resumes, track ATS performance,
   and improve your chances of getting interviews.
 </p>
+<div className="quick-actions">
+  <button
+    className="upload-btn"
+    onClick={() => navigate("/upload")}
+  >
+    Upload Resume
+  </button>
 
+  <button
+    className="action-btn"
+    onClick={() => navigate("/analysis")}
+  >
+    View Analysis
+  </button>
+</div>
     </div>
 
     <div className="stats-grid">
@@ -63,17 +77,6 @@ return (
         <p>12</p>
       </div>
 
-    </div>
-
-    <div className="upload-section">
-      <button
-        className="upload-btn"
-        onClick={() =>
-          navigate("/upload")
-        }
-      >
-        Upload Resume
-      </button>
     </div>
 
     <div className="recent-section">
