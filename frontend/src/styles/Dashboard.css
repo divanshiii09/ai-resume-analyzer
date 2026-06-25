@@ -182,3 +182,83 @@
 
   margin-bottom: 20px;
 }
+
+.clickable-card {
+cursor: pointer;
+}
+
+.clickable-card:hover {
+transform: translateY(-5px);
+}
+
+.highlighted-card {
+border: 2px solid #22c55e;
+
+background:#f0fdf4;
+
+box-shadow: 0 0 20px
+rgba(37, 99, 235, 0.2);
+
+transition: all 0.3s ease;
+}
+.best-badge {
+  display: inline-block;
+
+  margin-left: 10px;
+
+  background: #22c55e;
+
+  color: white;
+
+  padding: 4px 10px;
+
+  border-radius: 999px;
+
+  font-size: 12px;
+
+  font-weight: 600;
+}
+
+.resume-card {
+  background: white;
+  padding: 18px 20px;
+  border-radius: 12px;
+  margin-top: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.resume-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.resume-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.resume-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.resume-score {
+  font-size: 14px;
+  font-weight: 600;
+  color: #64748b;
+}
+.best-badge {
+  background: #22c55e;
+  color: white;
+
+  padding: 6px 12px;
+
+  border-radius: 999px;
+
+  font-size: 13px;
+
+  font-weight: 600;
+}

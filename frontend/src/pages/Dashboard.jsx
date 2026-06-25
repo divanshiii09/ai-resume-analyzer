@@ -8,6 +8,8 @@ function Dashboard() {
 const navigate = useNavigate();
 
 const [resumes, setResumes] = useState([]);
+const [highlightedResume, setHighlightedResume] =
+useState(null);
 
 const userName =
 localStorage.getItem("userName") || "User";
@@ -29,6 +31,14 @@ console.log(err);
 }, [userEmail]);
 
 const totalAnalyses = resumes.length;
+const highestResume =
+resumes.length > 0
+? resumes.reduce((best, current) =>
+current.atsScore > best.atsScore
+? current
+: best
+)
+: null;
 
 const averageScore =
 resumes.length > 0
@@ -99,11 +109,39 @@ return (
         </p>
       </div>
 
-      <div className="stat-card">
-        <h3>Resumes Uploaded</h3>
+     <div
+  className="stat-card clickable-card"
+  onClick={() => {
+    if (highestResume) {
+      setHighlightedResume(
+        highestResume._id
+      );
 
-        <p>{totalAnalyses}</p>
-      </div>
+  document
+    .getElementById(
+      highestResume._id
+    )
+    ?.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    });
+}
+
+
+}}
+
+>
+
+  <h3>Highest ATS Score</h3>
+
+  <p>
+    {highestResume
+      ? `${highestResume.atsScore}%`
+      : "--"}
+  </p>
+</div>
+
+      
     </div>
 
     <div className="recent-section">
@@ -121,13 +159,34 @@ return (
         </div>
       ) : (
         resumes.map((resume) => (
-          <div
-            key={resume._id}
-            className="resume-card"
-          >
-            {resume.fileName} - ATS
-            Score: {resume.atsScore}
-          </div>
+
+<div
+  id={resume._id}
+  key={resume._id}
+  className={`resume-card ${
+    highlightedResume === resume._id
+      ? "highlighted-card"
+      : ""
+  }`}
+>
+  <div className="resume-card-header">
+    <div className="resume-left">
+      <span className="resume-name">
+        {resume.fileName}
+      </span>
+
+      {highlightedResume === resume._id && (
+        <span className="best-badge">
+          Recommended
+        </span>
+      )}
+    </div>
+
+    <span className="resume-score">
+      ATS Score: {resume.atsScore}%
+    </span>
+  </div>
+</div>
         ))
       )}
     </div>
