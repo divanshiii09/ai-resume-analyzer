@@ -79,26 +79,18 @@ return (
 
     </div>
 
-    <div className="recent-section">
-      <h2>Recent Analyses</h2>
+<div className="recent-section">
+  <h2>Recent Analyses</h2>
 
-      <div className="resume-card">
-        Software Engineer Resume.pdf -
-        ATS Score: 85
-      </div>
+  <div className="empty-state">
+    <h3>No analyses yet</h3>
 
-      <div className="resume-card">
-        Frontend Resume.pdf -
-        ATS Score: 78
-      </div>
-
-      <div className="resume-card">
-        Data Analyst Resume.pdf -
-        ATS Score: 88
-      </div>
-
-    </div>
-
+    <p>
+      Upload your first resume to get an ATS
+      score and personalized feedback.
+    </p>
+  </div>
+</div>
   </div>
 </>
 
