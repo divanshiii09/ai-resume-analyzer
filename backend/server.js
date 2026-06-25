@@ -1,88 +1,179 @@
 require("dotenv").config();
+
 const connectDB = require("./config/db");
+const User = require("./models/User");
+const Resume = require("./models/Resume");
 const express = require("express");
 const cors = require("cors");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const app = express();
-connectDB();
-app.use(cors());
-app.use(express.json()); // IMPORTANT for reading JSON body
 
-// Temporary "database" (we'll replace with MongoDB later)
-const users = [];
+connectDB();
+
+app.use(cors());
+app.use(express.json());
 
 /* ---------------- REGISTER ---------------- */
+
 app.post("/api/register", async (req, res) => {
+console.log("REGISTER HIT");
+console.log(req.body);
   try {
-    const { name, email, password } = req.body;
+const { name, email, password } = req.body;
 
-    // check if user exists
-    const existingUser = users.find((u) => u.email === email);
-    if (existingUser) {
-      return res.status(400).json({ message: "User already exists" });
-    }
 
-    // hash password
-    const hashedPassword = await bcrypt.hash(password, 10);
+const existingUser = await User.findOne({
+  email,
+});
 
-    const newUser = {
-      name,
-      email,
-      password: hashedPassword,
-    };
+if (existingUser) {
+  return res.status(400).json({
+    message: "User already exists",
+  });
+}
 
-    users.push(newUser);
+const hashedPassword = await bcrypt.hash(
+  password,
+  10
+);
 
-    res.json({ message: "User registered successfully" });
-  } catch (error) {
-    res.status(500).json({ message: "Server error" });
-  }
+const newUser = await User.create({
+  name,
+  email,
+  password: hashedPassword,
+});
+
+res.json({
+  message: "User registered successfully",
+  user: {
+    name: newUser.name,
+    email: newUser.email,
+  },
+});
+
+
+} catch (error) {
+  console.log("REGISTER ERROR");
+  console.log(error);
+
+  res.status(500).json({
+    message: error.message,
+});
+
+
+}
 });
 
 /* ---------------- LOGIN ---------------- */
+
 app.post("/api/login", async (req, res) => {
-  try {
-    const { email, password } = req.body;
+try {
+const { email, password } = req.body;
 
-    const user = users.find((u) => u.email === email);
 
-    if (!user) {
-      return res.status(400).json({ message: "User not found" });
-    }
+const user = await User.findOne({
+  email,
+});
 
-    const isMatch = await bcrypt.compare(password, user.password);
+if (!user) {
+  return res.status(400).json({
+    message: "User not found",
+  });
+}
 
-    if (!isMatch) {
-      return res.status(400).json({ message: "Invalid password" });
-    }
+const isMatch = await bcrypt.compare(
+  password,
+  user.password
+);
 
-    const token = jwt.sign(
-      { email: user.email, name: user.name },
-      "secretkey123",
-      { expiresIn: "1h" }
-    );
+if (!isMatch) {
+  return res.status(400).json({
+    message: "Invalid password",
+  });
+}
 
-    res.json({
-      message: "Login successful",
-      token,
-      user: {
-        name: user.name,
-        email: user.email,
-      },
-    });
-
-  } catch (error) {
-    res.status(500).json({ message: "Server error" });
+const token = jwt.sign(
+  {
+    email: user.email,
+    name: user.name,
+  },
+  "secretkey123",
+  {
+    expiresIn: "1h",
   }
+);
+
+res.json({
+  message: "Login successful",
+  token,
+  user: {
+    name: user.name,
+    email: user.email,
+  },
+});
+
+
+} catch (error) {
+console.log(error);
+
+
+res.status(500).json({
+  message: "Server error",
+});
+
+}
+});
+
+// ---------------- SAVE RESUME ---------------- */
+app.post("/api/resume", async (req, res) => {
+try {
+const {
+title,
+fileName,
+userEmail,
+atsScore,
+} = req.body;
+
+
+const resume = await Resume.create({
+  title,
+  fileName,
+  userEmail,
+  atsScore,
+});
+
+res.json({
+  message: "Resume saved successfully",
+  resume,
+});
+
+
+} catch (error) {
+console.log(error);
+
+
+res.status(500).json({
+  message: "Server error",
+});
+
+
+}
 });
 
 /* ---------------- TEST ROUTE ---------------- */
+
 app.get("/api/test", (req, res) => {
-  res.json({ message: "Backend working" });
+res.json({
+message: "Backend working",
+});
 });
 
+/* ---------------- START SERVER ---------------- */
+
 app.listen(3000, () => {
-  console.log("Server running on port 3000");
+console.log(
+"Server running on port 3000"
+);
 });

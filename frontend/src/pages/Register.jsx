@@ -64,10 +64,17 @@ alert("Registration Successful");
 navigate("/");
 
 } catch (err) {
-setError(
-err.response?.data?.message ||
-"Registration failed"
-);
+  console.log("REGISTER ERROR:", err);
+
+  console.log(
+    "SERVER RESPONSE:",
+    err.response?.data
+  );
+
+  setError(
+    err.response?.data?.message ||
+    "Registration failed"
+  );
 }
 }
 
