@@ -39,6 +39,11 @@ setError("");
     "userName",
     response.data.user.name
   );
+  
+localStorage.setItem(
+"userEmail",
+response.data.user.email
+);
 
   navigate("/dashboard");
 } catch (err) {

@@ -1,129 +1,115 @@
 import { useState } from "react";
+import axios from "axios";
 import "../styles/UploadResume.css";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 
 function UploadResume() {
-const [selectedFile, setSelectedFile] = useState(null);
-const [error, setError] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
 
-const navigate = useNavigate();
+  const [error, setError] = useState("");
 
-function handleFileChange(event) {
-const file = event.target.files[0];
+  const navigate = useNavigate();
 
+  function handleFileChange(event) {
+    const file = event.target.files[0];
 
-if (!file) return;
+    if (!file) return;
 
-const allowedTypes = [
-  "application/pdf",
-  "application/msword",
-  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-];
+    const allowedTypes = [
+      "application/pdf",
+      "application/msword",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    ];
 
-if (!allowedTypes.includes(file.type)) {
-  setError(
-    "Only PDF, DOC and DOCX files are allowed."
-  );
-  setSelectedFile(null);
-  return;
-}
+    if (!allowedTypes.includes(file.type)) {
+      setError("Only PDF, DOC and DOCX files are allowed.");
 
-setError("");
-setSelectedFile(file);
+      setSelectedFile(null);
 
+      return;
+    }
 
-}
+    setError("");
 
-return (
-<> <Navbar />
+    setSelectedFile(file);
+  }
 
+  async function handleAnalyzeResume() {
+    try {
+      const userEmail = localStorage.getItem("userEmail");
 
-  <div className="upload-page">
-    <div className="upload-card">
-      <h1 className="upload-title">
-        Upload Your Resume
-      </h1>
+      await axios.post("http://localhost:3000/api/resume", {
+        title: selectedFile.name,
+        fileName: selectedFile.name,
+        userEmail,
+        atsScore: 82,
+      });
 
-      <p className="upload-description">
-        Get instant ATS analysis,
-        AI feedback, and personalized
-        improvement suggestions.
-      </p>
+      navigate("/analysis");
+    } catch (error) {
+      console.log(error);
 
-      <div className="drop-zone">
-        <h3>
-          Drag & Drop Your Resume
-        </h3>
+      alert("Failed to save resume");
+    }
+  }
 
-        <span>or</span>
+  return (
+    <>
+      {" "}
+      <Navbar />
+      <div className="upload-page">
+        <div className="upload-card">
+          <h1 className="upload-title">Upload Your Resume</h1>
 
-        <label className="choose-btn">
-          Choose File
-
-          <input
-            type="file"
-            hidden
-            onChange={handleFileChange}
-          />
-        </label>
-
-        <small>
-          Supported: PDF, DOC, DOCX
-        </small>
-
-        {error && (
-          <p className="upload-error">
-            {error}
+          <p className="upload-description">
+            Get instant ATS analysis, AI feedback, and personalized improvement
+            suggestions.
           </p>
-        )}
 
-        {selectedFile && (
-          <div className="file-info">
-            <h4>
-              ✅ Resume Uploaded Successfully
-            </h4>
+          <div className="drop-zone">
+            <h3>Drag & Drop Your Resume</h3>
 
-            <p className="file-name">
-              <strong>
-                📄 File Name:
-              </strong>{" "}
-              {selectedFile.name}
-            </p>
+            <span>or</span>
 
-            <p>
-              <strong>
-                File Type:
-              </strong>{" "}
-              {selectedFile.type}
-            </p>
+            <label className="choose-btn">
+              Choose File
+              <input type="file" hidden onChange={handleFileChange} />
+            </label>
 
-            <p>
-              <strong>
-                File Size:
-              </strong>{" "}
-              {(selectedFile.size / 1024).toFixed(2)} KB
-            </p>
+            <small>Supported: PDF, DOC, DOCX</small>
+
+            {error && <p className="upload-error">{error}</p>}
+
+            {selectedFile && (
+              <div className="file-info">
+                <h4>✅ Resume Uploaded Successfully</h4>
+
+                <p className="file-name">
+                  <strong>📄 File Name:</strong> {selectedFile.name}
+                </p>
+
+                <p>
+                  <strong>File Type:</strong> {selectedFile.type}
+                </p>
+
+                <p>
+                  <strong>File Size:</strong>{" "}
+                  {(selectedFile.size / 1024).toFixed(2)} KB
+                </p>
+              </div>
+            )}
+
+            {selectedFile && (
+              <button className="analyze-btn" onClick={handleAnalyzeResume}>
+                Analyze Resume
+              </button>
+            )}
           </div>
-        )}
-
-        {selectedFile && (
-          <button
-            className="analyze-btn"
-            onClick={() =>
-              navigate("/analysis")
-            }
-          >
-            Analyze Resume
-          </button>
-        )}
-      </div>
-    </div>
-  </div>
-</>
-
-
-);
+        </div>
+      </div>{" "}
+    </>
+  );
 }
 
 export default UploadResume;
