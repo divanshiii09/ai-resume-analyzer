@@ -39,7 +39,7 @@ return ( <BrowserRouter> <Routes>
     />
 
     <Route
-      path="/analysis"
+      path="/analysis/:id"
       element={
         <ProtectedRoute>
           <Analysis />

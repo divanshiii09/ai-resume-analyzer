@@ -200,3 +200,27 @@ console.log(
 "Server running on port 3000"
 );
 });
+
+// ---------------- GET RESUME BY ID ---------------- */
+app.get("/api/resume/:id", async (req, res) => {
+try {
+const resume =
+await Resume.findById(
+req.params.id
+);
+
+
+res.json(resume);
+
+
+} catch (error) {
+console.log(error);
+
+
+res.status(500).json({
+  message: "Server error",
+});
+
+
+}
+});

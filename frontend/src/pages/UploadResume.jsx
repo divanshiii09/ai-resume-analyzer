@@ -78,18 +78,24 @@ try {
 const userEmail =
 localStorage.getItem("userEmail");
 
+const response = await axios.post(
+"http://localhost:3000/api/resume",
+{
+title: selectedFile.name,
+fileName: selectedFile.name,
+userEmail,
+atsScore: Math.floor(
+Math.random() * (95 - 70 + 1)
+) + 70,
+}
+);
 
-  await axios.post(
-    "http://localhost:3000/api/resume",
-    {
-      title: selectedFile.name,
-      fileName: selectedFile.name,
-      userEmail,
-      atsScore: 82,
-    }
-  );
+navigate(
+`/analysis/${response.data.resume._id}`
+);
 
-  navigate("/analysis");
+
+
 } catch (error) {
   console.log(error);
 
