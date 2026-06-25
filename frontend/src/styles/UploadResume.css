@@ -150,3 +150,11 @@ small {
 .analyze-btn:hover {
   background: #1d4ed8;
 }
+
+.drag-active {
+border: 2px dashed #2563eb;
+
+background: #eff6ff;
+
+transition: all 0.3s ease;
+}
