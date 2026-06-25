@@ -170,6 +170,29 @@ message: "Backend working",
 });
 });
 
+// ---------------- GET RESUMES ---------------- */
+app.get("/api/resumes/:email", async (req, res) => {
+try {
+const resumes = await Resume.find({
+userEmail: req.params.email,
+}).sort({ createdAt: -1 });
+
+
+res.json(resumes);
+
+} catch (error) {
+console.log(error);
+
+
+res.status(500).json({
+  message: "Server error",
+});
+
+
+}
+});
+
+
 /* ---------------- START SERVER ---------------- */
 
 app.listen(3000, () => {
