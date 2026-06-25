@@ -1,15 +1,18 @@
 .analysis-page {
-  min-height: 100vh;
+min-height: 100vh;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+display: flex;
+justify-content: center;
 
-  background: #f8fafc;
+padding: 40px 20px;
+
+background: #f8fafc;
 }
 
+
 .analysis-card {
-  width: 800px;
+  width: 100%;
+  max-width: 1200px;
 
   background: white;
 
