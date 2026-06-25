@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "../styles/Login.css";
 
 function Register() {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -12,46 +14,63 @@ function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  function handleRegister() {
-    if (name === "") {
-      setError("Please enter your name");
-      return;
-    }
+async function handleRegister() {
+if (name === "") {
+setError("Please enter your name");
+return;
+}
 
-    if (email === "") {
-      setError("Please enter your email");
-      return;
-    }
+if (email === "") {
+setError("Please enter your email");
+return;
+}
 
-    if (!isValidEmail(email)) {
-      setError("Please enter a valid email address");
-      return;
-    }
+if (!isValidEmail(email)) {
+setError("Please enter a valid email address");
+return;
+}
 
-    if (password === "") {
-      setError("Please enter password");
-      return;
-    }
+if (password === "") {
+setError("Please enter password");
+return;
+}
 
-    if (confirmPassword === "") {
-      setError("Please confirm password");
-      return;
-    }
+if (confirmPassword === "") {
+setError("Please confirm password");
+return;
+}
 
-    if (password !== confirmPassword) {
-      setError("Passwords do not match");
-      return;
-    }
+if (password !== confirmPassword) {
+setError("Passwords do not match");
+return;
+}
 
-    setError("");
+try {
+setError("");
 
-    console.log(name);
-    console.log(email);
-    console.log(password);
-    console.log(confirmPassword);
-
-    alert("Registration Successful");
+const response = await axios.post(
+  "http://localhost:3000/api/register",
+  {
+    name,
+    email,
+    password,
   }
+);
+
+console.log(response.data);
+
+alert("Registration Successful");
+
+navigate("/");
+
+} catch (err) {
+setError(
+err.response?.data?.message ||
+"Registration failed"
+);
+}
+}
+
 
   function isValidEmail(email) {
   return /\S+@\S+\.\S+/.test(email);
