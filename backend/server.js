@@ -15,6 +15,13 @@ connectDB();
 app.use(cors());
 app.use(express.json());
 
+const path = require("path");
+
+app.use(
+  "/uploads",
+  express.static(path.join(__dirname, "uploads"))
+);
+
 /* ---------------- REGISTER ---------------- */
 
 app.post("/api/register", async (req, res) => {
