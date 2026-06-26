@@ -9,15 +9,13 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const upload = require("./middleware/upload");
 const app = express();
-
-connectDB();
+const fs = require("fs");
+const pdf = require("pdf-parse");connectDB();
 
 app.use(cors());
 app.use(express.json());
 
-const path = require("path");
-
-app.use(
+const path = require("path");app.use(
   "/uploads",
   express.static(path.join(__dirname, "uploads"))
 );
@@ -133,47 +131,52 @@ res.status(500).json({
 }
 });
 
-// ---------------- SAVE RESUME ---------------- */
+// ---------------- SAVE RESUME ----------------
 app.post(
-"/api/resume",
-upload.single("resume"),
-async (req, res) => {
-try {
-const { userEmail,
-atsScore,
-} = req.body;
+  "/api/resume",
+  upload.single("resume"),
+  async (req, res) => {
+    try {
+      const { userEmail, atsScore } = req.body;
 
+      // Read uploaded PDF
+      const fileBuffer = fs.readFileSync(req.file.path);
 
-  const resume =
-    await Resume.create({
-      title: req.file.originalname,
+      // Extract text from PDF
+      const pdfData = await pdf(fileBuffer);
 
-      fileName:
-        req.file.originalname,
+      const extractedText = pdfData.text;
 
-      filePath:
-        req.file.path,
+      console.log("=========== RESUME TEXT ===========");
+      console.log(extractedText);
+      console.log("===================================");
 
-      userEmail,
+      const resume = await Resume.create({
+        title: req.file.originalname,
 
-      atsScore,
-    });
+        fileName: req.file.originalname,
 
-  res.json({
-    message:
-      "Resume uploaded successfully",
+        filePath: req.file.path,
 
-    resume,
-  });
-} catch (error) {
-  console.log(error);
+        userEmail,
 
-  res.status(500).json({
-    message: "Server error",
-  });
-}
+        atsScore,
 
-}
+        resumeText: extractedText,
+      });
+
+      res.json({
+        message: "Resume uploaded successfully",
+        resume,
+      });
+    } catch (error) {
+      console.log(error);
+
+      res.status(500).json({
+        message: "Server error",
+      });
+    }
+  }
 );
 
 /* ---------------- TEST ROUTE ---------------- */
