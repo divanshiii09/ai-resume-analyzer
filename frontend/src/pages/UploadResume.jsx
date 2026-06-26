@@ -68,41 +68,48 @@ const file = e.dataTransfer.files[0];
 
 if (!file) return;
 
-validateFile(file);
-
-
-}
-
+validateFile(file);}
 async function handleAnalyzeResume() {
 try {
 const userEmail =
 localStorage.getItem("userEmail");
 
-const response = await axios.post(
-"http://localhost:3000/api/resume",
-{
-title: selectedFile.name,
-fileName: selectedFile.name,
-userEmail,
-atsScore: Math.floor(
-Math.random() * (95 - 70 + 1)
-) + 70,
-}
+const formData = new FormData();
+
+formData.append(
+  "resume",
+  selectedFile
 );
+
+formData.append(
+  "userEmail",
+  userEmail
+);
+
+formData.append(
+  "atsScore",
+  Math.floor(
+    Math.random() * (95 - 70 + 1)
+  ) + 70
+);
+
+const response =
+  await axios.post(
+    "http://localhost:3000/api/resume",
+    formData
+  );
 
 navigate(
-`/analysis/${response.data.resume._id}`
-);
-
-
+  `/analysis/${response.data.resume._id}`);
 
 } catch (error) {
-  console.log(error);
+console.log(error);
 
-  alert("Failed to save resume");
+
+alert("Failed to save resume");
+
+
 }
-
-
 }
 
 return (

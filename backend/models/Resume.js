@@ -5,10 +5,12 @@ const resumeSchema = new mongoose.Schema(
 title: {
 type: String,
 required: true,
+},fileName: {
+  type: String,
+  required: true,
 },
 
-
-fileName: {
+filePath: {
   type: String,
   required: true,
 },
@@ -20,10 +22,7 @@ userEmail: {
 
 atsScore: {
   type: Number,
-  default: 0,
-},
-
-
+  default: 0,},
 },
 {
 timestamps: true,

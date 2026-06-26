@@ -7,7 +7,7 @@ const express = require("express");
 const cors = require("cors");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-
+const upload = require("./middleware/upload");
 const app = express();
 
 connectDB();
@@ -127,40 +127,47 @@ res.status(500).json({
 });
 
 // ---------------- SAVE RESUME ---------------- */
-app.post("/api/resume", async (req, res) => {
+app.post(
+"/api/resume",
+upload.single("resume"),
+async (req, res) => {
 try {
-const {
-title,
-fileName,
-userEmail,
+const { userEmail,
 atsScore,
 } = req.body;
 
 
-const resume = await Resume.create({
-  title,
-  fileName,
-  userEmail,
-  atsScore,
-});
+  const resume =
+    await Resume.create({
+      title: req.file.originalname,
 
-res.json({
-  message: "Resume saved successfully",
-  resume,
-});
+      fileName:
+        req.file.originalname,
 
+      filePath:
+        req.file.path,
 
+      userEmail,
+
+      atsScore,
+    });
+
+  res.json({
+    message:
+      "Resume uploaded successfully",
+
+    resume,
+  });
 } catch (error) {
-console.log(error);
+  console.log(error);
 
-
-res.status(500).json({
-  message: "Server error",
-});
-
+  res.status(500).json({
+    message: "Server error",
+  });
+}
 
 }
-});
+);
 
 /* ---------------- TEST ROUTE ---------------- */
 
