@@ -202,3 +202,43 @@ margin-bottom: 12px;
 color: #64748b;
 margin-bottom: 20px;
 }
+.resume-selector {
+  display: flex;
+  flex-direction: column;
+
+  gap: 8px;
+
+  margin: 25px 0;
+}
+
+.resume-selector label {
+  font-size: 14px;
+
+  color: #64748b;
+
+  font-weight: 600;
+}
+
+.resume-selector select {
+  padding: 12px 15px;
+
+  border-radius: 10px;
+
+  border: 1px solid #dbe2ea;
+
+  font-size: 15px;
+
+  cursor: pointer;
+
+  outline: none;
+
+  transition: 0.2s;
+}
+
+.resume-selector select:hover {
+  border-color: #3b82f6;
+}
+
+.resume-selector select:focus {
+  border-color: #2563eb;
+}

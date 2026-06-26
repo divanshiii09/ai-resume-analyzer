@@ -7,9 +7,21 @@ import axios from "axios";
 function Analysis() {
   const navigate = useNavigate();
   const { id } = useParams();
-
+const [allResumes, setAllResumes] = useState([]);
   const [resume, setResume] = useState(null);
+useEffect(() => {
+  const email =
+    localStorage.getItem("userEmail");
 
+  axios
+    .get(
+      `http://localhost:3000/api/resumes/${email}`
+    )
+    .then((res) => {
+      setAllResumes(res.data);
+    })
+    .catch(console.log);
+}, []);
   useEffect(() => {
     axios
       .get(`http://localhost:3000/api/resume/${id}`)
@@ -53,7 +65,29 @@ function Analysis() {
         <div className="analysis-card">
           <h1>Resume Analysis Report</h1>
 
-          <p>File: {resume.fileName}</p>
+     <div className="resume-selector">
+  <label>
+    Viewing Resume
+  </label>
+
+  <select
+    value={resume._id}
+    onChange={(e) =>
+      navigate(
+        `/analysis/${e.target.value}`
+      )
+    }
+  >
+    {allResumes.map((item) => (
+      <option
+        key={item._id}
+        value={item._id}
+      >
+        {item.fileName}
+      </option>
+    ))}
+  </select>
+</div>
 
           <div className="score-box">
             <h2>{score}%</h2>
