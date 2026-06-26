@@ -8,7 +8,7 @@ function UploadResume() {
 const [selectedFile, setSelectedFile] = useState(null);
 const [error, setError] = useState("");
 const [dragActive, setDragActive] = useState(false);
-
+const [isUploading, setIsUploading] = useState(false);
 const navigate = useNavigate();
 
 function validateFile(file) {
@@ -69,48 +69,43 @@ const file = e.dataTransfer.files[0];
 if (!file) return;
 
 validateFile(file);}
+
 async function handleAnalyzeResume() {
-try {
-const userEmail =
-localStorage.getItem("userEmail");
+  if (isUploading) return;
 
-const formData = new FormData();
+  try {
+    setIsUploading(true);
 
-formData.append(
-  "resume",
-  selectedFile
-);
+    const userEmail = localStorage.getItem("userEmail");
 
-formData.append(
-  "userEmail",
-  userEmail
-);
+    const formData = new FormData();
 
-formData.append(
-  "atsScore",
-  Math.floor(
-    Math.random() * (95 - 70 + 1)
-  ) + 70
-);
+    formData.append("resume", selectedFile);
+    formData.append("userEmail", userEmail);
+    formData.append(
+      "atsScore",
+      Math.floor(Math.random() * (95 - 70 + 1)) + 70
+    );
 
-const response =
-  await axios.post(
-    "http://localhost:3000/api/resume",
-    formData
-  );
+    const response = await axios.post(
+      "http://localhost:3000/api/resume",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
 
-navigate(
-  `/analysis/${response.data.resume._id}`);
-
-} catch (error) {
-console.log(error);
-
-
-alert("Failed to save resume");
-
-
+    navigate(`/analysis/${response.data.resume._id}`);
+  } catch (error) {
+    console.log(error);
+    alert("Failed to save resume");
+  } finally {
+    setIsUploading(false);
+  }
 }
-}
+
 
 return (
 <> <Navbar />
@@ -195,14 +190,20 @@ return (
         )}
 
         {selectedFile && (
-          <button
-            className="analyze-btn"
-            onClick={
-              handleAnalyzeResume
-            }
-          >
-            Analyze Resume
-          </button>
+        <button
+  className="analyze-btn"
+  onClick={handleAnalyzeResume}
+  disabled={isUploading}
+>
+  {isUploading ? (
+    <>
+      <span className="spinner"></span>
+      Analyzing Resume...
+    </>
+  ) : (
+    "Analyze Resume"
+  )}
+</button>
         )}
       </div>
     </div>
