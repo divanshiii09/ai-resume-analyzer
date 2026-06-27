@@ -11,6 +11,7 @@ const upload = require("./middleware/upload");
 const app = express();
 const fs = require("fs");
 const pdf = require("pdf-parse");connectDB();
+const analyzeResume = require("./services/gemini");
 
 app.use(cors());
 app.use(express.json());
@@ -146,10 +147,15 @@ app.post(
       const pdfData = await pdf(fileBuffer);
 
       const extractedText = pdfData.text;
-
+  
       console.log("=========== RESUME TEXT ===========");
       console.log(extractedText);
       console.log("===================================");
+    const aiResponse = await analyzeResume(extractedText);
+
+console.log("========== GEMINI ==========");
+console.log(aiResponse);
+console.log("============================");
 
       const resume = await Resume.create({
         title: req.file.originalname,
