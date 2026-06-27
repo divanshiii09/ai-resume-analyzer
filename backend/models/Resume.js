@@ -52,7 +52,7 @@ const resumeSchema = new mongoose.Schema(
     // Match Status
     status: {
       type: String,
-      default: "",
+      default: "Needs Improvement",
     },
 
     // AI Feedback

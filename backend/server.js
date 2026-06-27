@@ -153,6 +153,8 @@ app.post(
       console.log("===================================");
 
       // Gemini Analysis
+      console.log("FIRST 500 CHARACTERS:");
+console.log(extractedText.substring(0, 500));
       const analysis = await analyzeResume(extractedText);
 
       console.log("========== GEMINI ==========");
