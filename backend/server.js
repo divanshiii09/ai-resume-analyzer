@@ -138,24 +138,26 @@ app.post(
   upload.single("resume"),
   async (req, res) => {
     try {
-      const { userEmail, atsScore } = req.body;
+      const { userEmail } = req.body;
 
       // Read uploaded PDF
       const fileBuffer = fs.readFileSync(req.file.path);
 
-      // Extract text from PDF
+      // Extract text
       const pdfData = await pdf(fileBuffer);
 
       const extractedText = pdfData.text;
-  
+
       console.log("=========== RESUME TEXT ===========");
       console.log(extractedText);
       console.log("===================================");
-    const aiResponse = await analyzeResume(extractedText);
 
-console.log("========== GEMINI ==========");
-console.log(aiResponse);
-console.log("============================");
+      // Gemini Analysis
+      const analysis = await analyzeResume(extractedText);
+
+      console.log("========== GEMINI ==========");
+      console.log(analysis);
+      console.log("============================");
 
       const resume = await Resume.create({
         title: req.file.originalname,
@@ -164,11 +166,25 @@ console.log("============================");
 
         filePath: req.file.path,
 
-        userEmail,
-
-        atsScore,
+    userEmail,
 
         resumeText: extractedText,
+
+        atsScore: analysis.score,
+
+        skillsMatch: analysis.skillsMatch,
+
+        formattingScore: analysis.formatting,
+
+        keywordScore: analysis.keywords,
+
+        status: analysis.status,
+
+        strengths: analysis.strengths,
+
+        weaknesses: analysis.weaknesses,
+
+        suggestions: analysis.suggestions,
       });
 
       res.json({
@@ -176,15 +192,16 @@ console.log("============================");
         resume,
       });
     } catch (error) {
+      console.log("=========== ERROR ===========");
       console.log(error);
+      console.log("=============================");
 
       res.status(500).json({
         message: "Server error",
       });
     }
   }
-);
-
+); 
 /* ---------------- TEST ROUTE ---------------- */
 
 app.get("/api/test", (req, res) => {

@@ -27,11 +27,13 @@ const resumeSchema = new mongoose.Schema(
       default: "",
     },
 
+    // Overall ATS Score
     atsScore: {
       type: Number,
       default: 0,
     },
 
+    // Individual Scores
     skillsMatch: {
       type: Number,
       default: 0,
@@ -45,6 +47,23 @@ const resumeSchema = new mongoose.Schema(
     keywordScore: {
       type: Number,
       default: 0,
+    },
+
+    // Match Status
+    status: {
+      type: String,
+      default: "",
+    },
+
+    // AI Feedback
+    strengths: {
+      type: [String],
+      default: [],
+    },
+
+    weaknesses: {
+      type: [String],
+      default: [],
     },
 
     suggestions: {
