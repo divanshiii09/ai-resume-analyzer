@@ -7,37 +7,35 @@ import axios from "axios";
 function Analysis() {
   const navigate = useNavigate();
   const { id } = useParams();
-const [allResumes, setAllResumes] = useState([]);
-  const [resume, setResume] = useState(null);
-useEffect(() => {
-  const email =
-    localStorage.getItem("userEmail");
 
-  axios
-    .get(
-      `http://localhost:3000/api/resumes/${email}`
-    )
-    .then((res) => {
-      setAllResumes(res.data);
-    })
-    .catch(console.log);
-}, []);
+  const [resume, setResume] = useState(null);
+  const [allResumes, setAllResumes] = useState([]);
+
+  useEffect(() => {
+    const email = localStorage.getItem("userEmail");
+
+    axios
+      .get(`http://localhost:3000/api/resumes/${email}`)
+      .then((res) => {
+        setAllResumes(res.data);
+      })
+      .catch(console.log);
+  }, []);
+
   useEffect(() => {
     axios
       .get(`http://localhost:3000/api/resume/${id}`)
       .then((res) => {
         setResume(res.data);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch(console.log);
   }, [id]);
 
   if (!resume) {
     return (
       <>
-        {" "}
-        <Navbar />
+     <Navbar />
+
         <div className="analysis-page">
           <div className="analysis-card">
             <h2>Loading Analysis...</h2>
@@ -48,71 +46,69 @@ useEffect(() => {
   }
 
   const score = resume.atsScore;
-
-  let status = "Needs Improvement";
-
-  if (score >= 85) {
-    status = "Excellent Match";
-  } else if (score >= 70) {
-    status = "Good Match";
-  }
+  const skills = resume.skillsMatch;
+  const formatting = resume.formattingScore;
+  const keywords = resume.keywordScore;
+  const status = resume.status;
 
   return (
     <>
-      {" "}
-      <Navbar />
+    <Navbar />
+
       <div className="analysis-page">
         <div className="analysis-card">
+
           <h1>Resume Analysis Report</h1>
 
-     <div className="resume-selector">
-  <label>
-    Viewing Resume
-  </label>
+          <div className="resume-selector">
+            <label>Viewing Resume</label>
 
-  <select
-    value={resume._id}
-    onChange={(e) =>
-      navigate(
-        `/analysis/${e.target.value}`
-      )
-    }
-  >
-    {allResumes.map((item) => (
-      <option
-        key={item._id}
-        value={item._id}
-      >
-        {item.fileName}
-      </option>
-    ))}
-  </select>
-</div>
+            <select
+              value={resume._id}
+              onChange={(e) =>
+                navigate(`/analysis/${e.target.value}`)
+              }
+            >
+              {allResumes.map((item) => (
+                <option
+                  key={item._id}
+                  value={item._id}
+                >
+                  {item.fileName}
+                </option>
+              ))}
+            </select>
+          </div>
 
           <div className="score-box">
             <h2>{score}%</h2>
 
-            <p className="score-title">ATS Compatibility Score</p>
+            <p className="score-title">
+              ATS Compatibility Score
+            </p>
 
-            <span className="score-status">{status}</span>
+            <span className="score-status">
+              {status}
+            </span>
 
             <p className="score-note">
-              Analysis generated for your uploaded resume.
+              AI-powered analysis of your uploaded resume.
             </p>
           </div>
 
-        <div className="metrics-section">
+          <div className="metrics-section">
+
             <div className="metric">
               <div className="metric-header">
                 <span>Skills Match</span>
-                <span>{Math.max(score - 5, 50)}%</span>
+                <span>{skills}%</span>
               </div>
 
               <div className="progress-bar">
                 <div
                   className="progress-fill"
                   style={{
-                    width: `${Math.max(score - 5, 50)}%`,
+                    width: `${skills}%`,
                   }}
                 ></div>
               </div>
@@ -121,14 +117,14 @@ useEffect(() => {
             <div className="metric">
               <div className="metric-header">
                 <span>Formatting</span>
-                <span>{Math.min(score + 5, 100)}%</span>
+                <span>{formatting}%</span>
               </div>
 
               <div className="progress-bar">
                 <div
                   className="progress-fill"
                   style={{
-                    width: `${Math.min(score + 5, 100)}%`,
+                    width: `${formatting}%`,
                   }}
                 ></div>
               </div>
@@ -136,40 +132,90 @@ useEffect(() => {
 
             <div className="metric">
               <div className="metric-header">
-                <span>Keywords</span>
-                <span>{score}%</span>
+                <span>Keyword Match</span>
+                <span>{keywords}%</span>
               </div>
 
               <div className="progress-bar">
                 <div
                   className="progress-fill"
                   style={{
-                    width: `${score}%`,
+                    width: `${keywords}%`,
                   }}
                 ></div>
               </div>
             </div>
-        </div>
 
-          <div className="suggestion-box">
-            <h3>Suggestions</h3>
-
-            <div className="suggestion-item">✅ Add more action verbs</div>
-
-            <div className="suggestion-item">
-              ✅ Include measurable achievements
-            </div>
-
-            <div className="suggestion-item">✅ Improve keyword matching</div>
           </div>
 
-          <button className="secondary-btn" onClick={() => navigate("/upload")}>
+          <div className="suggestion-box">
+
+            <h3>✅ Strengths</h3>
+
+            {resume.strengths?.length ? (
+              resume.strengths.map((item, index) => (
+                <div
+                  key={index}
+                  className="suggestion-item"
+                >
+                  ✅ {item}
+                </div>
+              ))
+            ) : (
+              <div className="suggestion-item">
+                No strengths available.
+              </div>
+            )}
+
+            <h3 style={{ marginTop: "30px" }}>
+              ❌ Weaknesses
+            </h3>
+
+            {resume.weaknesses?.length ? (
+              resume.weaknesses.map((item, index) => (
+                <div
+                  key={index}
+                  className="suggestion-item"
+                >
+                  ❌ {item}
+                </div>
+              ))
+            ) : (
+              <div className="suggestion-item">
+                No weaknesses available.
+              </div>
+            )}
+
+            <h3 style={{ marginTop: "30px" }}>
+              💡 Suggestions
+            </h3>
+
+            {resume.suggestions?.length ? (
+              resume.suggestions.map((item, index) => (
+                <div
+                  key={index}
+                  className="suggestion-item"
+                >
+                  💡 {item}
+                </div>
+              ))
+            ) : (
+              <div className="suggestion-item">
+                No suggestions available.
+              </div>
+            )}
+
+        </div>
+
+          <button
+            className="secondary-btn"
+            onClick={() => navigate("/upload")}
+          >
             Upload Another Resume
           </button>
+
         </div>
       </div>
     </>
   );
-}
-
-export default Analysis;
+} export default Analysis;
