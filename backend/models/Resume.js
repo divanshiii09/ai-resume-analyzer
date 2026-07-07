@@ -22,6 +22,7 @@ const resumeSchema = new mongoose.Schema(
       required: true,
     },
 
+    
     resumeText: {
       type: String,
       default: "",
