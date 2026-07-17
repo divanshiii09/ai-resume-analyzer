@@ -9,50 +9,91 @@ async function analyzeResume(text) {
     });
 
     const prompt = `
-You are an ATS Resume Expert.
+You are a Senior Technical Recruiter and ATS evaluator.
 
-Analyze the following resume and respond ONLY with valid JSON.
+Your task is to evaluate resumes exactly like a recruiter.
 
-Return exactly this structure:
+IMPORTANT:
+Do NOT randomly assign scores.
+
+Evaluate independently:
+
+1. Formatting (0-100)
+2. Skills Match (0-100)
+3. Keyword Match (0-100)
+4. Projects Quality
+5. Experience
+6. Education
+7. Readability
+8. Action Verbs
+9. ATS Friendliness
+
+After evaluating these categories, calculate an overall ATS score.
+
+First determine:
+
+- Industry
+- Target Job Role
+- Experience Level
+
+Then generate recruiter feedback.
+
+Return ONLY valid JSON.
 
 {
-  "score": 86,
-  "skillsMatch": 82,
-  "formatting": 90,
-  "keywords": 84,
-  "status": "Good Match",
-  "strengths": [
-    "...",
-    "...",
-    "..."
-  ],
-  "weaknesses": [
-    "...",
-    "...",
-    "..."
-  ],
-  "suggestions": [
-    "...",
-    "...",
-    "..."
-  ]
+  "score":0,
+  "skillsMatch":0,
+  "formatting":0,
+  "keywords":0,
+  "status":"",
+  "summary":"",
+  "industry":"",
+  "experienceLevel":"",
+  "detectedSkills":[],
+  "missingSkills":[],
+  "formattingIssues":[],
+  "missingKeywords":[],
+  "strengths":[],
+  "weaknesses":[],
+  "suggestions":[],
+  "recommendedRoles":[]
 }
 
 Rules:
-- score must be between 0 and 100.
-- skillsMatch must be between 0 and 100.
-- formatting must be between 0 and 100.
-- keywords must be between 0 and 100.
-- status must be exactly one of:
-  "Excellent Match"
-  "Good Match"
-  "Needs Improvement"
-- Give 3-5 strengths.
-- Give 3-5 weaknesses.
-- Give 3-5 suggestions.
-- Return ONLY JSON.
-- Do not use markdown.
-- Do not use \`\`\`json.
+
+score -> integer 0-100
+
+skillsMatch -> integer
+
+formatting -> integer
+
+keywords -> integer
+
+status must be exactly one of
+
+Excellent Match
+
+Good Match
+
+Needs Improvement
+
+summary should be 2-3 lines like a recruiter.
+
+detectedSkills should contain 8-15 technical skills.
+
+missingSkills should contain relevant missing skills.
+
+formattingIssues should contain formatting improvements.
+
+missingKeywords should contain ATS keywords.
+
+strengths should contain 4-6 points.
+
+weaknesses should contain 4-6 points.
+
+suggestions should contain 4-6 actionable suggestions.
+
+recommendedRoles should contain 5 suitable job roles.
 
 Resume:
 
@@ -63,38 +104,54 @@ ${text}
 
     const response = result.response.text();
 
+    console.log(response);
+
     const cleaned = response
       .replace(/```json/g, "")
       .replace(/```/g, "")
       .trim();
 
-    return JSON.parse(cleaned);
+    const parsed = JSON.parse(cleaned);
 
+    return parsed;
   } catch (err) {
-    console.log("========== GEMINI ERROR ==========");
-    console.log(err.message);
-    console.log("==================================");
+    console.log(err);
 
-    // Return default analysis so upload never fails
-    return {
-      score: 70,
-      skillsMatch: 70,
+   return {
+      score: 65,
+
+      skillsMatch: 65,
+
       formatting: 70,
-      keywords: 70,
+
+      keywords: 60,
+
       status: "Needs Improvement",
-      strengths: [
-        "Resume uploaded successfully."
-      ],
-      weaknesses: [
-        "AI analysis unavailable."
-      ],
+
+      summary:
+        "AI analysis could not be generated.",
+
+      industry: "Unknown",
+
+      experienceLevel: "Unknown",
+
+      detectedSkills: [],
+
+      missingSkills: [],
+
+      formattingIssues: [],
+
+      missingKeywords: [],
+
+      strengths: [],
+
+      weaknesses: [],
+
       suggestions: [
-        "Gemini is currently busy. Please analyze again later."
-      ]
+        "Please try again."
+      ],
+
+      recommendedRoles: [],
     };
   }
-}
-
-module.exports = analyzeResume;
-// this is gemini.js
-//this is gemini.js
+}module.exports = analyzeResume;

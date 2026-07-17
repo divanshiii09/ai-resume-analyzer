@@ -156,38 +156,63 @@ app.post(
       console.log("FIRST 500 CHARACTERS:");
 console.log(extractedText.substring(0, 500));
       const analysis = await analyzeResume(extractedText);
+let status = "Needs Improvement";
 
+if (analysis.score >= 85) {
+  status = "Excellent Match";
+} else if (analysis.score >= 70) {
+  status = "Good Match";
+}
+
+analysis.status = status;
       console.log("========== GEMINI ==========");
       console.log(analysis);
       console.log("============================");
 
-      const resume = await Resume.create({
-        title: req.file.originalname,
+const resume = await Resume.create({
+  title: req.file.originalname,
 
-        fileName: req.file.originalname,
+  fileName: req.file.originalname,
 
-        filePath: req.file.path,
+  filePath: req.file.path,
 
-    userEmail,
+  userEmail,
 
-        resumeText: extractedText,
+  resumeText: extractedText,
 
-        atsScore: analysis.score,
+  atsScore: analysis.score,
 
-        skillsMatch: analysis.skillsMatch,
+  status: analysis.status,
 
-        formattingScore: analysis.formatting,
+  summary: analysis.summary,
 
-        keywordScore: analysis.keywords,
+  skillsMatch: analysis.skillsMatch,
 
-        status: analysis.status,
+  detectedSkills: analysis.detectedSkills,
 
-        strengths: analysis.strengths,
+  missingSkills: analysis.missingSkills,
 
-        weaknesses: analysis.weaknesses,
+  formattingScore: analysis.formatting,
 
-        suggestions: analysis.suggestions,
-      });
+  formattingIssues: analysis.formattingIssues,
+
+  keywordScore: analysis.keywords,
+
+  missingKeywords: analysis.missingKeywords,
+
+  experienceLevel: analysis.experienceLevel,
+
+  industry: analysis.industry,
+
+  strengths: analysis.strengths,
+
+  weaknesses: analysis.weaknesses,
+
+  suggestions: analysis.suggestions,
+
+  recommendedRoles: analysis.recommendedRoles,
+});
+
 
       res.json({
         message: "Resume uploaded successfully",

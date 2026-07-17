@@ -21,23 +21,38 @@ const resumeSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+   resumeText: {
+      type: String,
+      default: "",
+    },
+  atsScore: {
+      type: Number,
+      default: 0,
+    },
 
-    
-    resumeText: {
+    status: {
+      type: String,
+      default: "Needs Improvement",
+    },
+
+    summary: {
       type: String,
       default: "",
     },
 
-    // Overall ATS Score
-    atsScore: {
+    skillsMatch: {
       type: Number,
       default: 0,
     },
 
-    // Individual Scores
-    skillsMatch: {
-      type: Number,
-      default: 0,
+    detectedSkills: {
+      type: [String],
+      default: [],
+    },
+
+    missingSkills: {
+      type: [String],
+      default: [],
     },
 
     formattingScore: {
@@ -45,18 +60,30 @@ const resumeSchema = new mongoose.Schema(
       default: 0,
     },
 
+    formattingIssues: {
+      type: [String],
+      default: [],
+    },
+
     keywordScore: {
       type: Number,
       default: 0,
     },
 
-    // Match Status
-    status: {
-      type: String,
-      default: "Needs Improvement",
+    missingKeywords: {
+      type: [String],
+      default: [],
     },
 
-    // AI Feedback
+    experienceLevel: {
+      type: String,
+      default: "",
+    },
+
+    industry: {
+      type: String,
+      default: "",
+    },
     strengths: {
       type: [String],
       default: [],
@@ -68,6 +95,11 @@ const resumeSchema = new mongoose.Schema(
     },
 
     suggestions: {
+      type: [String],
+      default: [],
+    },
+
+    recommendedRoles: {
       type: [String],
       default: [],
     },
