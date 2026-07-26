@@ -11,6 +11,7 @@ const upload = require("./middleware/upload");
 const app = express();
 const fs = require("fs");
 const pdf = require("pdf-parse");connectDB();
+const analyzeJobMatch = require("./services/jobMatch");
 const analyzeResume = require("./services/gemini");
 
 app.use(cors());
@@ -229,6 +230,48 @@ const resume = await Resume.create({
     }
   }
 ); 
+
+// ---------------- ANALYZE AGAINST JOB DESCRIPTION ----------------
+
+app.post("/api/analyze-job", async (req, res) => {
+  try {
+    const { resumeId, jobDescription } = req.body;
+
+    if (!resumeId) {
+      return res.status(400).json({
+        message: "Resume ID is required",
+      });
+    }
+
+    if (!jobDescription || jobDescription.trim() === "") {
+      return res.status(400).json({
+        message: "Job Description is required",
+      });
+    }
+
+    const resume = await Resume.findById(resumeId);
+
+    if (!resume) {
+      return res.status(404).json({
+        message: "Resume not found",
+      });
+    }
+
+    const result = await analyzeJobMatch(
+      resume.resumeText,
+      jobDescription
+    );
+
+    res.json(result);
+
+  } catch (error) {
+    console.log(error);
+
+    res.status(500).json({
+      message: "Server error",
+    });
+  }
+});
 /* ---------------- TEST ROUTE ---------------- */
 
 app.get("/api/test", (req, res) => {
