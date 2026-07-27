@@ -175,7 +175,7 @@ const resume = await Resume.create({
 
   fileName: req.file.originalname,
 
-  filePath: req.file.path,
+filePath: `/uploads/${req.file.filename}`,
 
   userEmail,
 
@@ -334,7 +334,42 @@ res.status(500).json({
 
 }
 });
+// ---------------- DELETE RESUME ----------------
+app.delete("/api/resume/:id", async (req, res) => {
+  try {
+    const resume = await Resume.findById(req.params.id);
 
+    if (!resume) {
+      return res.status(404).json({
+        message: "Resume not found",
+      });
+    }
+
+    // Delete uploaded PDF
+    const fullPath = path.join(
+  __dirname,
+  resume.filePath
+);
+
+if (fs.existsSync(fullPath)) {
+  fs.unlinkSync(fullPath);
+}
+
+    // Delete Mongo document
+    await Resume.findByIdAndDelete(req.params.id);
+
+    res.json({
+      message: "Resume deleted successfully",
+    });
+
+  } catch (error) {
+    console.log(error);
+
+    res.status(500).json({
+      message: "Server error",
+    });
+  }
+});
 // ---------------- GET LATEST RESUME BY EMAIL ---------------- */
 app.get(
 "/api/resume/latest/:email",

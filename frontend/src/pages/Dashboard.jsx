@@ -50,7 +50,38 @@ sum + resume.atsScore,
 ) / resumes.length
 )
 : "--";
+const handleDelete = async (id) => {
+  const confirmDelete = window.confirm(
+    "Are you sure you want to delete this resume?"
+  );
 
+  if (!confirmDelete) return;
+
+  try {
+    await axios.delete(
+      `http://localhost:3000/api/resume/${id}`
+    );
+
+    setResumes((prev) => {
+  const updated = prev.filter(
+    (resume) => resume._id !== id
+  );
+
+  if (updated.length === 0) {
+    setHighlightedResume(null);
+  }
+
+  return updated;
+});
+
+    if (highlightedResume === id) {
+      setHighlightedResume(null);
+    }
+  } catch (err) {
+    console.log(err);
+    alert("Failed to delete resume.");
+  }
+};
 return (
 <> <Navbar />
   
@@ -162,7 +193,7 @@ return (
           </p>
         </div>
       ) : (
-        resumes.map((resume) => (
+   resumes.map((resume) => (
 
 <div
   id={resume._id}
@@ -173,25 +204,71 @@ return (
       : ""
   }`}
 >
+
   <div className="resume-card-header">
-    <div className="resume-left">
-      <span className="resume-name">
-        {resume.fileName}
+
+    <div className="resume-info">
+
+      <h3>{resume.fileName}</h3>
+
+      <p>
+        Uploaded{" "}
+        {new Date(
+          resume.createdAt
+        ).toLocaleDateString()}
+      </p>
+
+      <span className="resume-score">
+        ATS Score {resume.atsScore}%
       </span>
 
       {highlightedResume === resume._id && (
         <span className="best-badge">
-          Recommended
+          ⭐ Recommended Resume
         </span>
       )}
+
     </div>
 
-    <span className="resume-score">
-      ATS Score: {resume.atsScore}%
-    </span>
   </div>
+
+  <div className="resume-actions">
+
+    <button
+      className="analysis-btn"
+      onClick={() =>
+        navigate(`/analysis/${resume._id}`)
+      }
+    >
+      👁 View Analysis
+    </button>
+
+    <button
+      className="pdf-btn"
+      onClick={() =>
+        window.open(
+          `http://localhost:3000/${resume.filePath}`,
+          "_blank"
+        )
+      }
+    >
+      📄 Open PDF
+    </button>
+
+    <button
+      className="delete-btn"
+      onClick={() =>
+        handleDelete(resume._id)
+      }
+    >
+      🗑 Delete Resume
+    </button>
+
+  </div>
+
 </div>
-        ))
+
+))
       )}
     </div>
   </div>
