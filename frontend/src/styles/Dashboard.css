@@ -220,11 +220,18 @@ transition: all 0.3s ease;
 }
 
 .resume-card {
-  background: white;
-  padding: 18px 20px;
-  border-radius: 12px;
-  margin-top: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  background: #fff;
+  border-radius: 18px;
+  padding: 24px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+  margin-top: 20px;
+  transition: all .25s ease;
+}
+
+.resume-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 35px rgba(15,23,42,.08);
 }
 
 .resume-card-header {
@@ -233,11 +240,7 @@ transition: all 0.3s ease;
   align-items: center;
 }
 
-.resume-left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
+
 
 .resume-name {
   font-size: 15px;
@@ -261,4 +264,294 @@ transition: all 0.3s ease;
   font-size: 13px;
 
   font-weight: 600;
+}
+
+
+.resume-left{
+
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.resume-name{
+    font-size:20px;
+    font-weight:700;
+    color:#0f172a;
+}
+
+.resume-date{
+
+    color:#64748b;
+    font-size:14px;
+}
+
+
+
+/* ===========================
+ATS Score
+=========================== */
+
+.resume-score{
+    font-size:38px;
+    font-weight:800;
+    color:#2563eb;
+    line-height:1;
+}
+
+.score-label{
+
+    color:#64748b;
+    font-size:14px;
+}
+
+
+
+/* ===========================
+Status
+=========================== */
+
+.resume-status{
+
+    margin-bottom:24px;
+}
+
+.status-pill{
+    padding:6px 12px;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:700;
+}
+
+.status-excellent{
+    background:#dcfce7;
+    color:#15803d;
+}
+
+.status-good{
+    background:#dbeafe;
+    color:#1d4ed8;
+}
+
+.status-needs{
+    background:#fee2e2;
+    color:#dc2626;
+}
+
+
+
+
+/* ===========================
+Divider
+=========================== */
+
+.resume-divider{
+
+    height:1px;
+    background:#edf2f7;
+
+    margin:22px 0;
+}
+
+
+
+/* ===========================
+Actions
+=========================== */
+
+.resume-actions{
+    display:flex;
+    gap:14px;
+    margin-top:22px;
+}
+
+
+
+/* ===========================
+Action Chip
+=========================== */
+
+.resume-action{
+
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    border:none;
+
+    background:#f8fafc;
+
+    color:#334155;
+
+    padding:12px 18px;
+
+    border-radius:999px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+    font-size:15px;
+
+    font-weight:600;
+}
+
+.resume-action svg{
+
+    font-size:18px;
+
+    color:#2563eb;
+}
+
+
+
+/* Hover */
+
+.resume-action:hover{
+
+    background:#eff6ff;
+
+    color:#2563eb;
+
+    transform:translateY(-2px);
+
+    box-shadow:
+    0 6px 18px rgba(37,99,235,.15);
+}
+
+
+
+/* Delete */
+
+.resume-action.delete{
+
+    background:#fff5f5;
+}
+
+.resume-action.delete svg{
+
+    color:#dc2626;
+}
+
+.resume-action.delete:hover{
+
+    background:#fee2e2;
+
+    color:#dc2626;
+}
+
+
+
+/* Recommended */
+
+.best-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    background:#e0f2fe;
+
+    color:#0369a1;
+
+    padding:6px 14px;
+
+    border-radius:999px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    width:fit-content;
+}
+
+
+
+/* Highlight */
+
+.highlighted-card{
+
+    border:2px solid #2563eb;
+
+    box-shadow:
+    0 20px 50px rgba(37,99,235,.15);
+}
+.resume-title-row{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.score-box{
+    text-align:right;
+}
+
+.score-box p{
+    margin-top:4px;
+    color:#64748b;
+    font-size:13px;
+}.resume-icon-btn{
+
+    flex:1;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:13px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#f8fafc;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+    transition:.2s;
+}
+.resume-icon-btn:hover{
+
+    background:#2563eb;
+
+    color:white;
+
+    transform:translateY(-2px);
+}
+.delete-btn{
+
+    color:#dc2626;
+}
+
+.delete-btn:hover{
+
+    background:#dc2626;
+
+    color:white;
+}
+.clickable-header{
+    cursor:pointer;
+}
+@media(max-width:768px){
+
+.resume-card-header{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:20px;
+}
+
+.score-box{
+    text-align:left;
+}
+
+.resume-actions{
+    flex-direction:column;
+}
+
 }

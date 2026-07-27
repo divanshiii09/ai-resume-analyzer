@@ -3,6 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "../components/Navbar";
+import {
+  FiBarChart2,
+  FiFileText,
+  FiTrash2,
+} from "react-icons/fi";
 
 function Dashboard() {
 const navigate = useNavigate();
@@ -82,6 +87,8 @@ const handleDelete = async (id) => {
     alert("Failed to delete resume.");
   }
 };
+
+
 return (
 <> <Navbar />
   
@@ -193,83 +200,107 @@ return (
           </p>
         </div>
       ) : (
-   resumes.map((resume) => (
 
+resumes.map((resume) => (
+  <div
+    key={resume._id}
+className={`resume-card interactive-card ${      highlightedResume === resume._id
+        ? "highlighted-card"
+        : ""
+    }`}
+  >
+
+  {/*   */}
 <div
-  id={resume._id}
-  key={resume._id}
-  className={`resume-card ${
-    highlightedResume === resume._id
-      ? "highlighted-card"
-      : ""
-  }`}
+  className="resume-card-header clickable-header"
+  onClick={() => navigate(`/analysis/${resume._id}`)}
 >
 
-  <div className="resume-card-header">
+  <div className="resume-left">
 
-    <div className="resume-info">
+    <div className="resume-title-row">
 
-      <h3>{resume.fileName}</h3>
-
-      <p>
-        Uploaded{" "}
-        {new Date(
-          resume.createdAt
-        ).toLocaleDateString()}
-      </p>
-
-      <span className="resume-score">
-        ATS Score {resume.atsScore}%
+      <span className="resume-name">
+        {resume.fileName}
       </span>
 
-      {highlightedResume === resume._id && (
-        <span className="best-badge">
-          ⭐ Recommended Resume
-        </span>
-      )}
+      <span
+        className={`status-pill ${
+          resume.atsScore >= 85
+            ? "status-excellent"
+            : resume.atsScore >= 70
+            ? "status-good"
+            : "status-needs"
+        }`}
+      >
+        {resume.status}
+      </span>
 
     </div>
 
+    <span className="resume-date">
+      Uploaded on{" "}
+      {new Date(resume.createdAt).toLocaleDateString(
+        "en-IN",
+        {
+          day: "numeric",
+          month: "short",
+          year: "numeric",
+        }
+      )}
+    </span>
+
   </div>
 
-  <div className="resume-actions">
+  <div className="score-box">
 
-    <button
-      className="analysis-btn"
-      onClick={() =>
-        navigate(`/analysis/${resume._id}`)
-      }
-    >
-      👁 View Analysis
-    </button>
+    <div className="resume-score">
+      {resume.atsScore}%
+    </div>
 
-    <button
-      className="pdf-btn"
-      onClick={() =>
-        window.open(
-          `http://localhost:3000/${resume.filePath}`,
-          "_blank"
-        )
-      }
-    >
-      📄 Open PDF
-    </button>
-
-    <button
-      className="delete-btn"
-      onClick={() =>
-        handleDelete(resume._id)
-      }
-    >
-      🗑 Delete Resume
-    </button>
+    <p>ATS Score</p>
 
   </div>
 
 </div>
+{/*  */}
 
-))
-      )}
+<button
+className="resume-icon-btn"
+onClick={() =>
+window.open(
+`http://localhost:3000/${resume.filePath.replace(/\\/g,"/")}`,
+"_blank"
+)
+}
+>
+<FiFileText />
+<span>Resume</span>
+</button>
+
+<button
+className="resume-icon-btn"
+onClick={() =>
+navigate(`/analysis/${resume._id}`)
+}
+>
+<FiBarChart2 />
+<span>Analysis</span>
+</button>
+
+<button
+className="resume-icon-btn delete-btn"
+onClick={() =>
+handleDelete(resume._id)
+}
+>
+<FiTrash2 />
+<span>Delete</span>
+</button>
+
+</div>
+  ))
+ )}
     </div>
   </div>
 </>
