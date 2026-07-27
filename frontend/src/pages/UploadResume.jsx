@@ -160,12 +160,12 @@ return (
         {selectedFile && (
           <div className="file-info">
             <h4>
-              ✅ Resume Uploaded Successfully
+              📄 Resume Uploaded Successfully
             </h4>
 
             <p className="file-name">
               <strong>
-                📄 File Name:
+                 File Name:
               </strong>{" "}
               {selectedFile.name}
             </p>

@@ -82,28 +82,54 @@ const analyzeJob = async () => {
       <div className="analysis-page">
         <div className="analysis-card">
 
+
 <div className="resume-overview">
 
-<div>
+    <div className="resume-left">
 
-<h1>Resume Analysis</h1>
+        <h1>Resume Analysis</h1>
 
-<p>{resume.fileName}</p>
+        <p className="resume-file">
+            📄 {resume.fileName}
+        </p>
 
-<p>
-Uploaded on{" "}
-{new Date(resume.createdAt).toLocaleDateString()}
-</p>
+        <p>
+            Uploaded on{" "}
+            {new Date(resume.createdAt).toLocaleDateString()}
+        </p>
+
+    </div>
+
+    <div className="resume-right">
+
+        <div className="status-badge">
+            {status}
+        </div>
+
+        <label>Select Resume</label>
+
+        <select
+            className="resume-dropdown"
+            value={resume._id}
+            onChange={(e) =>
+                navigate(`/analysis/${e.target.value}`)
+            }
+        >
+            {allResumes.map((item) => (
+                <option
+                    key={item._id}
+                    value={item._id}
+                >
+                    {item.fileName}
+                </option>
+            ))}
+        </select>
+
+    </div>
 
 </div>
 
-<div className="status-badge">
 
-<span>{status}</span>
-
-</div>
-
-</div>
          <div className="resume-select-card">
 
   <div className="resume-select-text">

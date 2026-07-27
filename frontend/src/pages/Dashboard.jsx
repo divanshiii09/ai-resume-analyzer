@@ -81,14 +81,18 @@ return (
           Upload Resume
         </button>
 
-        <button
-          className="action-btn"
-          onClick={() =>
-            navigate("/analysis")
-          }
-        >
-          View Analysis
-        </button>
+<button
+  className="action-btn"
+  onClick={() => {
+    if (highestResume) {
+      navigate(`/analysis/${highestResume._id}`);
+    } else {
+      alert("Please upload a resume first.");
+    }
+  }}
+>
+  View Analysis
+</button>
       </div>
     </div>
 
