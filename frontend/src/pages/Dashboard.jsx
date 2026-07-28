@@ -270,10 +270,11 @@ className="resume-icon-btn"
 onClick={(e)=>{
 e.stopPropagation();
 
-window.open(
-`http://localhost:3000/${resume.filePath.replace(/\\/g,"/")}`,
-"_blank"
-);
+const fileUrl = `http://localhost:3000/${resume.filePath
+  .replace(/\\/g, "/")
+  .replace(/^\/+/, "")}`;
+
+window.open(fileUrl, "_blank");
 }}
 >
 <FiFileText />
