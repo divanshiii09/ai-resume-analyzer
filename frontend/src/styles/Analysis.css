@@ -24,7 +24,7 @@
 
 background:white;
 
-padding:28px;
+padding:36px;
 
 border-radius:18px;
 
@@ -662,4 +662,25 @@ color:#64748b;
 display:flex;
 flex-direction:column;
 gap:34px;
+}
+
+.resume-overview,
+.ats-card,
+.jd-card,
+.jd-result-card{
+
+transition:.3s;
+
+}
+
+.resume-overview:hover,
+.ats-card:hover,
+.jd-card:hover,
+.jd-result-card:hover{
+
+transform:translateY(-4px);
+
+box-shadow:
+0 20px 50px rgba(15,23,42,.08);
+
 }

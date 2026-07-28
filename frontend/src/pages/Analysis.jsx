@@ -130,40 +130,7 @@ const analyzeJob = async () => {
 </div>
 
 
-         <div className="resume-select-card">
-
-  <div className="resume-select-text">
-
-    <div className="resume-label">
-      Resume History
-    </div>
-
-    <h3>Select Resume</h3>
-
-    <p>
-      Switch between your uploaded resumes to compare analyses.
-    </p>
-
-  </div>
-
-  <select
-    className="resume-dropdown"
-    value={resume._id}
-    onChange={(e) =>
-      navigate(`/analysis/${e.target.value}`)
-    }
-  >
-    {allResumes.map((item) => (
-      <option
-        key={item._id}
-        value={item._id}
-      >
-        {item.fileName}
-      </option>
-    ))}
-  </select>
-
-</div>
+        
 
 <div className="ats-card">
 
@@ -371,23 +338,17 @@ marginTop:"10px"
 
   {jobResult.suggestions.map((item, index) => (
 
-<div
-key={index}
-className="suggestion-card"
->
+<div className="suggestion-card">
+  <div
+    className="suggestion-number"
+    style={{ background: "#16a34a" }}
+  >
+    ✓
+  </div>
 
-<div className="suggestion-number">
-
-{index+1}
-
-</div>
-
-<div className="suggestion-text">
-
-{item}
-
-</div>
-
+  <div className="suggestion-text">
+    No strengths available.
+  </div>
 </div>
 
 ))}
