@@ -261,18 +261,20 @@ className={`resume-card interactive-card ${      highlightedResume === resume._i
     <p>ATS Score</p>
 
   </div>
-
 </div>
-{/*  */}
+
+<div className="resume-actions">
 
 <button
 className="resume-icon-btn"
-onClick={() =>
+onClick={(e)=>{
+e.stopPropagation();
+
 window.open(
 `http://localhost:3000/${resume.filePath.replace(/\\/g,"/")}`,
 "_blank"
-)
-}
+);
+}}
 >
 <FiFileText />
 <span>Resume</span>
@@ -280,9 +282,10 @@ window.open(
 
 <button
 className="resume-icon-btn"
-onClick={() =>
-navigate(`/analysis/${resume._id}`)
-}
+onClick={(e)=>{
+e.stopPropagation();
+navigate(`/analysis/${resume._id}`);
+}}
 >
 <FiBarChart2 />
 <span>Analysis</span>
@@ -290,15 +293,19 @@ navigate(`/analysis/${resume._id}`)
 
 <button
 className="resume-icon-btn delete-btn"
-onClick={() =>
-handleDelete(resume._id)
-}
+onClick={(e)=>{
+e.stopPropagation();
+handleDelete(resume._id);
+}}
 >
 <FiTrash2 />
 <span>Delete</span>
 </button>
 
 </div>
+
+</div>
+
   ))
  )}
     </div>
