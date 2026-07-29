@@ -95,6 +95,22 @@ suggestions should contain 4-6 actionable suggestions.
 
 recommendedRoles should contain 5 suitable job roles.
 
+IMPORTANT:
+
+Return plain text only.
+
+Do NOT use Markdown.
+
+Do NOT use **bold**.
+
+Do NOT use *italics*.
+
+Do NOT use bullet symbols.
+
+Do NOT use headings.
+
+Every string in the JSON must be plain text suitable for direct display in a React application.
+
 Resume:
 
 ${text}
@@ -112,6 +128,31 @@ ${text}
       .trim();
 
     const parsed = JSON.parse(cleaned);
+const cleanText = (text = "") =>
+  typeof text === "string"
+    ? text
+        .replace(/\*\*/g, "")
+        .replace(/\*/g, "")
+        .trim()
+    : text;
+
+parsed.summary = cleanText(parsed.summary);
+
+parsed.strengths = parsed.strengths?.map(cleanText) || [];
+
+parsed.weaknesses = parsed.weaknesses?.map(cleanText) || [];
+
+parsed.suggestions = parsed.suggestions?.map(cleanText) || [];
+
+parsed.detectedSkills = parsed.detectedSkills?.map(cleanText) || [];
+
+parsed.missingSkills = parsed.missingSkills?.map(cleanText) || [];
+
+parsed.formattingIssues = parsed.formattingIssues?.map(cleanText) || [];
+
+parsed.missingKeywords = parsed.missingKeywords?.map(cleanText) || [];
+
+parsed.recommendedRoles = parsed.recommendedRoles?.map(cleanText) || [];
 
     return parsed;
   } catch (err) {
