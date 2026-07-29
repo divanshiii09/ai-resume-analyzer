@@ -463,9 +463,17 @@ marginTop:"10px"
   {resume.strengths?.length ? (
 resume.strengths.map((item,index)=>(
 
-<div
+<motion.div
 key={index}
 className="suggestion-card"
+initial={{ opacity: 0, x: -25 }}
+whileInView={{ opacity: 1, x: 0 }}
+viewport={{ once: true, amount: 0.2 }}
+transition={{
+duration: 0.45,
+delay: index * 0.08,
+ease: "easeOut",
+}}
 >
 
 <div
@@ -485,12 +493,17 @@ background:"#16a34a"
 
 </div>
 
-</div>
+</motion.div>
 
 ))
   ) : (
-  <div className="suggestion-card">
-
+<motion.div
+className="suggestion-card"
+initial={{ opacity: 0 }}
+whileInView={{ opacity: 1 }}
+viewport={{ once: true }}
+transition={{ duration: 0.4 }}
+>
 <div
 className="suggestion-number"
 style={{
@@ -508,8 +521,7 @@ background:"#16a34a"
 
 </div>
 
-</div>
-  )}
+</motion.div>  )}
 
   <h2 style={{ marginTop: "35px" }}>
     Recommended Improvements
