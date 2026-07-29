@@ -191,14 +191,17 @@ AI-powered analysis of your uploaded resume.
   <p>
     Paste any job description to see how well your resume matches the role.
   </p>
+<div className="textarea-wrapper">
 
-  <textarea
-    className="jd-textarea"
-    placeholder="Paste the complete Job Description here..."
-    value={jobDescription}
-    onChange={(e) => setJobDescription(e.target.value)}
-  />
-
+ <div
+  className="jd-editor"
+  contentEditable
+  suppressContentEditableWarning={true}
+  spellCheck={false}
+  data-placeholder="Paste the complete Job Description here..."
+  onInput={(e) => setJobDescription(e.currentTarget.innerText)}
+></div>
+</div>
  <button
   className="analyze-jd-btn"
   onClick={analyzeJob}
