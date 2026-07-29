@@ -528,10 +528,18 @@ background:"#16a34a"
   </h2>
 
   {resume.suggestions?.length ? (
-    resume.suggestions.map((item, index) => (
-      <div
+  resume.suggestions.map((item, index) => (
+      <motion.div
         key={index}
         className="suggestion-card"
+        initial={{ opacity: 0, x: 25 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{
+          duration: 0.45,
+          delay: index * 0.08,
+          ease: "easeOut",
+        }}
       >
         <div className="suggestion-number">
           {index + 1}
@@ -540,11 +548,16 @@ background:"#16a34a"
         <div className="suggestion-text">
           {item}
         </div>
-      </div>
+    </motion.div>
     ))
   ) : (
-   <div className="suggestion-card">
-
+<motion.div
+className="suggestion-card"
+initial={{ opacity: 0 }}
+whileInView={{ opacity: 1 }}
+viewport={{ once: true }}
+transition={{ duration: 0.4 }}
+>
 <div className="suggestion-number">
 
 —
@@ -557,7 +570,7 @@ No strengths available.
 
 </div>
 
-</div>
+</motion.div>
   )}
 
 </div>
