@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 function Analysis() {
   const navigate = useNavigate();
@@ -347,10 +348,18 @@ marginTop:"10px"
 
 {jobResult.suggestions?.length > 0 ? (
   jobResult.suggestions.map((item, index) => (
-    <div
-      key={index}
-      className="suggestion-card"
-    >
+  <motion.div
+    key={index}
+    className="suggestion-card"
+    initial={{ opacity: 0, y: 25 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, amount: 0.2 }}
+    transition={{
+      duration: 0.45,
+      delay: index * 0.08,
+      ease: "easeOut",
+    }}
+  >
       <div
         className="suggestion-number"
         style={{ background: "#16a34a" }}
@@ -361,11 +370,16 @@ marginTop:"10px"
       <div className="suggestion-text">
         {item}
       </div>
-    </div>
+    </motion.div>
   ))
 ) : (
-  <div className="suggestion-card">
-    <div
+<motion.div
+  className="suggestion-card"
+  initial={{ opacity: 0, y: 25 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.45 }}
+>    <div
       className="suggestion-number"
       style={{ background: "#16a34a" }}
     >
@@ -375,7 +389,7 @@ marginTop:"10px"
     <div className="suggestion-text">
       No suggestions available.
     </div>
-  </div>
+  </motion.div>
 )}
 
   </div>
