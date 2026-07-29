@@ -765,3 +765,16 @@ box-shadow:
     outline:none;
     box-shadow:none;
 }
+.jd-card h2{
+    margin:0 0 14px;
+    font-size:34px;
+    font-weight:700;
+    color:#111827;
+}
+
+.jd-card > p{
+    margin:0 0 32px;
+    font-size:18px;
+    color:#64748b;
+    line-height:1.7;
+}
