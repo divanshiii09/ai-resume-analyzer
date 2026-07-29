@@ -33,6 +33,7 @@ const [loadingJD, setLoadingJD] = useState(false);
       .catch(console.log);
   }, [id]);
 const analyzeJob = async () => {
+  if (loadingJD) return;
   if (!jobDescription.trim()) {
     alert("Please paste a Job Description.");
     return;
@@ -198,15 +199,20 @@ AI-powered analysis of your uploaded resume.
     onChange={(e) => setJobDescription(e.target.value)}
   />
 
-  <button
-    className="analyze-jd-btn"
-    onClick={analyzeJob}
-    disabled={loadingJD}
-  >
-    {loadingJD
-      ? "Analyzing..."
-      : "Analyze Job Match"}
-  </button>
+ <button
+  className="analyze-jd-btn"
+  onClick={analyzeJob}
+  disabled={loadingJD}
+>
+  {loadingJD ? (
+    <>
+      <span className="spinner"></span>
+      Analyzing...
+    </>
+  ) : (
+    "Analyze Job Match"
+  )}
+</button>
 
 </div>
 
@@ -336,22 +342,38 @@ marginTop:"10px"
 
     <h3>Suggestions</h3>
 
-  {jobResult.suggestions.map((item, index) => (
+{jobResult.suggestions?.length > 0 ? (
+  jobResult.suggestions.map((item, index) => (
+    <div
+      key={index}
+      className="suggestion-card"
+    >
+      <div
+        className="suggestion-number"
+        style={{ background: "#16a34a" }}
+      >
+        ✓
+      </div>
 
-<div className="suggestion-card">
-  <div
-    className="suggestion-number"
-    style={{ background: "#16a34a" }}
-  >
-    ✓
+      <div className="suggestion-text">
+        {item}
+      </div>
+    </div>
+  ))
+) : (
+  <div className="suggestion-card">
+    <div
+      className="suggestion-number"
+      style={{ background: "#16a34a" }}
+    >
+      ✓
+    </div>
+
+    <div className="suggestion-text">
+      No suggestions available.
+    </div>
   </div>
-
-  <div className="suggestion-text">
-    No strengths available.
-  </div>
-</div>
-
-))}
+)}
 
   </div>
 

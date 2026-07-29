@@ -458,32 +458,57 @@ font-family:inherit;
 .jd-textarea:focus{
 border-color:#2563eb;
 box-shadow:0 0 0 4px rgba(37,99,235,.12);
+ }
+ .analyze-jd-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+  margin-top: 20px;
+  padding: 14px 30px;
+
+  background: #2563eb;
+  color: white;
+
+  border: none;
+  border-radius: 12px;
+
+  font-size: 16px;
+  font-weight: 700;
+
+  cursor: pointer;
+  transition: .25s;
 }
 
-.analyze-jd-btn{
-
-margin-top:20px;
-
-padding:14px 30px;
-
-background:#2563eb;
-
-color:white;
-
-border:none;
-
-border-radius:12px;
-
-font-size:16px;
-
-font-weight:700;
-
-cursor:pointer;
-
-transition:.25s;
-
+.analyze-jd-btn:hover:not(:disabled) {
+  background: #1d4ed8;
+  transform: translateY(-2px);
 }
 
+.analyze-jd-btn:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+  opacity: .9;
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+
+  border: 3px solid rgba(255,255,255,.3);
+  border-top: 3px solid white;
+
+  border-radius: 50%;
+
+  animation: spin .8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 .analyze-jd-btn:hover{
 
 background:#1d4ed8;
