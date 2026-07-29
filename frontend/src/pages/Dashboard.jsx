@@ -151,39 +151,35 @@ return (
         </p>
       </div>
 
-     <div
+  
+<div
   className="stat-card clickable-card"
   onClick={() => {
-    if (highestResume) {
-      setHighlightedResume(
-        highestResume._id
-      );
+    if (!highestResume) return;
 
-  document
-    .getElementById(
-      highestResume._id
-    )
-    ?.scrollIntoView({
-      behavior: "smooth",
-      block: "center",
-    });
-}
+    if (highlightedResume === highestResume._id) {
+      // Second click -> remove highlight
+      setHighlightedResume(null);
+      return;
+    }
 
+    // First click -> highlight
+    setHighlightedResume(highestResume._id);
 
-}}
-
+    document
+      .getElementById(highestResume._id)
+      ?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+  }}
 >
-
-  <h3>Highest ATS Score</h3>
+ <h3>Highest ATS Score</h3>
 
   <p>
-    {highestResume
-      ? `${highestResume.atsScore}%`
-      : "--"}
+    {highestResume ? `${highestResume.atsScore}%` : "--"}
   </p>
-</div>
-
-      
+</div>    
     </div>
 
     <div className="recent-section">
@@ -203,6 +199,7 @@ return (
 
 resumes.map((resume) => (
   <div
+    id={resume._id}
     key={resume._id}
 className={`resume-card interactive-card ${      highlightedResume === resume._id
         ? "highlighted-card"
