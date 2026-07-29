@@ -59,6 +59,47 @@ Then compare:
 -----------------------------------
 
 Return ONLY JSON.
+IMPORTANT:
+
+Return plain text only.
+
+Do NOT use Markdown.
+
+Do NOT use **bold**
+
+Do NOT use __bold__
+
+Do NOT use *italic*
+
+Do NOT use bullet symbols like • or -
+
+Do NOT wrap text in backticks.
+
+Do NOT use headings.
+
+Do NOT use numbered lists.
+
+Every string inside the JSON must be plain text only.
+
+For example:
+
+Wrong:
+"**React** is missing."
+
+Correct:
+"React is missing."
+
+Wrong:
+"Improve **project descriptions**."
+
+Correct:
+"Improve project descriptions."
+
+Wrong:
+"Experience with **Node.js**, **Express.js**, and **MongoDB**."
+
+Correct:
+"Experience with Node.js, Express.js, and MongoDB."
 
 {
   "overallMatch": 0,
@@ -158,11 +199,15 @@ ${jobDescription}
     console.log(response);
     console.log("===============================");
 
-    const cleaned = response
-      .replace(/```json/g, "")
-      .replace(/```/g, "")
-      .trim();
-
+const cleaned = response
+  .replace(/```json/g, "")
+  .replace(/```/g, "")
+  .replace(/\*\*(.*?)\*\*/g, "$1")   // **bold**
+  .replace(/__(.*?)__/g, "$1")       // __bold__
+  .replace(/\*(.*?)\*/g, "$1")       // *italic*
+  .replace(/`(.*?)`/g, "$1")         // `code`
+  .trim();
+  
     return JSON.parse(cleaned);
 
   } catch (err) {
