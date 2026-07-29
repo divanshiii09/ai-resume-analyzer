@@ -71,7 +71,7 @@ display:flex;
 
 gap:18px;
 
-padding:18px;
+padding:24px;
 
 background:#f8fafc;
 
@@ -777,4 +777,12 @@ box-shadow:
     font-size:18px;
     color:#64748b;
     line-height:1.7;
+}
+.jd-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.jd-section .suggestion-card {
+  margin-top: 18px;
 }
