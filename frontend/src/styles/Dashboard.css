@@ -178,7 +178,7 @@
 }
 
 .empty-state p {
-  color: #64748b;
+  color: #668b64;
 
   margin-bottom: 20px;
 }
@@ -489,7 +489,7 @@ Action Chip
 
     border-radius:12px;
 
-    background:#f8fafc;
+    background:#f2f6fa;
 
     cursor:pointer;
 
