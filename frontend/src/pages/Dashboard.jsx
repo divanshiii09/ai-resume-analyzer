@@ -217,38 +217,44 @@ className={`resume-card interactive-card ${      highlightedResume === resume._i
 >
 
   <div className="resume-left">
+<div className="resume-title-row">
 
-    <div className="resume-title-row">
+  <span className="resume-name">
+    {resume.fileName}
+  </span>
+{highlightedResume === resume._id &&
+ highestResume?._id === resume._id && (
+  <span className="best-badge">
+    ⭐ Best Match
+  </span>
+)}
 
-      <span className="resume-name">
-        {resume.fileName}
-      </span>
+  <span
+    className={`status-pill ${
+      resume.atsScore >= 85
+        ? "status-excellent"
+        : resume.atsScore >= 70
+        ? "status-good"
+        : "status-needs"
+    }`}
+  >
+    {resume.status}
+  </span>
 
-      <span
-        className={`status-pill ${
-          resume.atsScore >= 85
-            ? "status-excellent"
-            : resume.atsScore >= 70
-            ? "status-good"
-            : "status-needs"
-        }`}
-      >
-        {resume.status}
-      </span>
+</div>
 
-    </div>
-
-    <span className="resume-date">
-      Uploaded on{" "}
-      {new Date(resume.createdAt).toLocaleDateString(
-        "en-IN",
-        {
-          day: "numeric",
-          month: "short",
-          year: "numeric",
-        }
-      )}
-    </span>
+<span className="resume-date">
+  Uploaded on{" "}
+  {new Date(resume.createdAt).toLocaleDateString(
+    "en-IN",
+    {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    }
+  )}
+</span>
+  
 
   </div>
 
