@@ -87,102 +87,158 @@ const analyzeJob = async () => {
 
 <div className="resume-overview">
 
-    <div className="resume-left">
+  <div className="resume-left">
+    <h1>Resume Analysis</h1>
 
-        <h1>Resume Analysis</h1>
+    <p className="resume-file">
+      📄 {resume.fileName}
+    </p>
 
-        <p className="resume-file">
-            📄 {resume.fileName}
-        </p>
+    <p className="resume-date">
+      Uploaded on {new Date(resume.createdAt).toLocaleDateString()}
+    </p>
+  </div>
 
-        <p>
-            Uploaded on{" "}
-            {new Date(resume.createdAt).toLocaleDateString()}
-        </p>
+  <div className="resume-right">
+
+    <div className={`status-badge ${status.toLowerCase().replace(/\s/g,"-")}`}>
+      {status}
+    </div>
+
+    <div className="resume-select">
+
+      <label>Select Resume</label>
+
+      <select
+        className="resume-dropdown"
+        value={resume._id}
+        onChange={(e)=>navigate(`/analysis/${e.target.value}`)}
+      >
+        {allResumes.map(item=>(
+          <option key={item._id} value={item._id}>
+            {item.fileName}
+          </option>
+        ))}
+      </select>
 
     </div>
 
-    <div className="resume-right">
-
-        <div className="status-badge">
-            {status}
-        </div>
-
-        <label>Select Resume</label>
-
-        <select
-            className="resume-dropdown"
-            value={resume._id}
-            onChange={(e) =>
-                navigate(`/analysis/${e.target.value}`)
-            }
-        >
-            {allResumes.map((item) => (
-                <option
-                    key={item._id}
-                    value={item._id}
-                >
-                    {item.fileName}
-                </option>
-            ))}
-        </select>
-
-    </div>
+  </div>
 
 </div>
+    <div className="ats-card">
 
+<div className="ats-left">
 
-        
+<div className="score-circle">
 
-<div className="ats-card">
+<svg width="170" height="170">
 
-<div className="score-left">
+<circle
+cx="85"
+cy="85"
+r="70"
+className="ring-bg"
+/>
+
+<circle
+cx="85"
+cy="85"
+r="70"
+className="ring-progress"
+style={{
+strokeDasharray:2*Math.PI*70,
+strokeDashoffset:
+2*Math.PI*70-
+(score/100)*(2*Math.PI*70)
+}}
+/>
+
+</svg>
+
+<div className="score-value">
 
 <h2>{score}%</h2>
 
-<p className="score-title">
-ATS Compatibility Score
-</p>
+<span>ATS Score</span>
 
-<span className="score-status">
+</div>
+
+</div>
+
+</div>
+
+<div className="ats-middle">
+
+<h2>ATS Compatibility Score</h2>
+
+<div className="status-badge">
 {status}
-</span>
+</div>
 
-<p className="score-note">
+<p>
 AI-powered analysis of your uploaded resume.
 </p>
 
 </div>
 
-<div className="score-right">
+<div className="ats-right">
 
-<div>
+<div className="metric-card">
 
 <h4>Skills</h4>
 
-<p>{skills}%</p>
+<span>{skills}%</span>
+
+<div className="metric-progress">
+
+<div
+className="metric-fill"
+style={{width:`${skills}%`}}
+/>
 
 </div>
 
-<div>
+</div>
+
+<div className="metric-card">
 
 <h4>Formatting</h4>
 
-<p>{formatting}%</p>
+<span>{formatting}%</span>
+
+<div className="metric-progress">
+
+<div
+className="metric-fill purple"
+style={{width:`${formatting}%`}}
+/>
 
 </div>
 
-<div>
+</div>
+
+<div className="metric-card">
 
 <h4>Keywords</h4>
 
-<p>{keywords}%</p>
+<span>{keywords}%</span>
+
+<div className="metric-progress">
+
+<div
+className="metric-fill green"
+style={{width:`${keywords}%`}}
+/>
 
 </div>
 
 </div>
 
-</div> 
+</div>
+
+</div>    
+
 {/* ================= JOB DESCRIPTION ANALYZER ================= */}
 
 <div className="jd-card">
