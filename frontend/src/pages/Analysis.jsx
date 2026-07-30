@@ -183,82 +183,11 @@ ease:"easeOut"
 {status}
 </div>
 
-<p>
-AI-powered analysis of your uploaded resume.
-</p>
-
-</div>
-
-<div className="ats-right">
-
-<div className="metric-card">
-
-<h4>Skills</h4>
-
-<span>{skills}%</span>
-
-<div className="metric-progress">
-
-<motion.div
-  className="progress-fill"
-  initial={{ width: 0 }}
-  whileInView={{ width: `${skills}%` }}
-  viewport={{ once: false, amount: 0.2 }}
-  transition={{
-    duration: 1.2,
-    ease: "easeOut",
-  }}
-/>
-
-</div>
-
-</div>
-
-<div className="metric-card">
-
-<h4>Formatting</h4>
-
-<span>{formatting}%</span>
-
-<div className="metric-progress">
-
-<motion.div
-className="progress-fill"
-initial={{ width: 0 }}
-whileInView={{ width: `${formatting}%` }}
-viewport={{ once: false, amount: 0.2 }}
-transition={{
-duration:1.2,
-ease:"easeOut"
-}}
-/>
-
-</div>
-
-</div>
-
-<div className="metric-card">
-
-<h4>Keywords</h4>
-
-<span>{keywords}%</span>
-
-<div className="metric-progress">
 
 
-<motion.div
-className="progress-fill"
-initial={{ width: 0 }}
-whileInView={{ width: `${keywords}%` }}
-viewport={{ once: false, amount: 0.2 }}
-transition={{
-duration:1.2,
-ease:"easeOut"
-}}
-/>
-</div>
 
-</div>
+
+
 
 </div>
 
