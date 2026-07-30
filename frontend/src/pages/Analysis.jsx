@@ -575,13 +575,14 @@ No strengths available.
 
 </div>
 
-          <button
-            className="secondary-btn"
-            onClick={() => navigate("/upload")}
-          >
-Analyze Another Resume
-          </button>
-
+         <button
+  className="analyze-again-btn"
+  onClick={() => navigate("/upload")}
+>
+  <span>＋</span>
+  Analyze Another Resume
+  
+</button>
         </div>
       </div>
     </>
