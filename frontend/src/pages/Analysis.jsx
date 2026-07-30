@@ -101,9 +101,7 @@ const analyzeJob = async () => {
 
   <div className="resume-right">
 
-    <div className={`status-badge ${status.toLowerCase().replace(/\s/g,"-")}`}>
-      {status}
-    </div>
+    
 
     <div className="resume-select">
 
@@ -137,20 +135,29 @@ const analyzeJob = async () => {
 <circle
 cx="85"
 cy="85"
-r="70"
+r="75"
 className="ring-bg"
 />
 
-<circle
+<motion.circle
 cx="85"
 cy="85"
-r="70"
+r="75"
 className="ring-progress"
-style={{
-strokeDasharray:2*Math.PI*70,
+strokeDasharray={2 * Math.PI * 70}
+initial={{
+strokeDashoffset:2*Math.PI*70
+}}
+animate={{
 strokeDashoffset:
 2*Math.PI*70-
 (score/100)*(2*Math.PI*70)
+}}
+transition={{
+duration:0.3,
+ease:"easeOut"
+
+
 }}
 />
 
@@ -192,9 +199,15 @@ AI-powered analysis of your uploaded resume.
 
 <div className="metric-progress">
 
-<div
-className="metric-fill"
-style={{width:`${skills}%`}}
+<motion.div
+  className="progress-fill"
+  initial={{ width: 0 }}
+  whileInView={{ width: `${skills}%` }}
+  viewport={{ once: false, amount: 0.2 }}
+  transition={{
+    duration: 1.2,
+    ease: "easeOut",
+  }}
 />
 
 </div>
@@ -209,9 +222,15 @@ style={{width:`${skills}%`}}
 
 <div className="metric-progress">
 
-<div
-className="metric-fill purple"
-style={{width:`${formatting}%`}}
+<motion.div
+className="progress-fill"
+initial={{ width: 0 }}
+whileInView={{ width: `${formatting}%` }}
+viewport={{ once: false, amount: 0.2 }}
+transition={{
+duration:1.2,
+ease:"easeOut"
+}}
 />
 
 </div>
@@ -226,11 +245,17 @@ style={{width:`${formatting}%`}}
 
 <div className="metric-progress">
 
-<div
-className="metric-fill green"
-style={{width:`${keywords}%`}}
-/>
 
+<motion.div
+className="progress-fill"
+initial={{ width: 0 }}
+whileInView={{ width: `${keywords}%` }}
+viewport={{ once: false, amount: 0.2 }}
+transition={{
+duration:1.2,
+ease:"easeOut"
+}}
+/>
 </div>
 
 </div>
