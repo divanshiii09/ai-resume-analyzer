@@ -321,7 +321,7 @@ className="skill-chip danger"
   className="progress-fill"
   initial={{ width: 0 }}
   whileInView={{ width: `${jobResult.keywordMatch}%` }}
-  viewport={{ once: true }}
+  viewport={{ once: false, amount: 0.2 }}
   transition={{
     duration: 1.2,
     ease: "easeOut",
@@ -352,7 +352,7 @@ marginTop:"10px"
     className="suggestion-card"
     initial={{ opacity: 0, y: 25 }}
     whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, amount: 0.2 }}
+    viewport={{ once: false, amount: 0.2 }}
     transition={{
       duration: 0.45,
       delay: index * 0.08,
@@ -376,7 +376,7 @@ marginTop:"10px"
   className="suggestion-card"
   initial={{ opacity: 0, y: 25 }}
   whileInView={{ opacity: 1, y: 0 }}
-  viewport={{ once: true }}
+  viewport={{ once: false, amount: 0.2}}
   transition={{ duration: 0.45 }}
 >    <div
       className="suggestion-number"
@@ -410,7 +410,7 @@ marginTop:"10px"
   className="progress-fill"
   initial={{ width: 0 }}
   whileInView={{ width: `${skills}%` }}
-  viewport={{ once: true }}
+  viewport={{ once: false, amount: 0.2}}
   transition={{
     duration: 1.2,
     ease: "easeOut",
@@ -431,7 +431,7 @@ marginTop:"10px"
   className="progress-fill"
   initial={{ width: 0 }}
   whileInView={{ width: `${formatting}%` }}
-  viewport={{ once: true }}
+  viewport={{ once: false, amount: 0.2 }}
   transition={{
     duration: 1.2,
     ease: "easeOut",
@@ -452,7 +452,7 @@ marginTop:"10px"
   className="progress-fill"
   initial={{ width: 0 }}
   whileInView={{ width: `${keywords}%` }}
-  viewport={{ once: true }}
+  viewport={{ once: false, amount: 0.2 }}
   transition={{
     duration: 1.2,
     ease: "easeOut",
@@ -483,7 +483,7 @@ key={index}
 className="suggestion-card"
 initial={{ opacity: 0, x: -25 }}
 whileInView={{ opacity: 1, x: 0 }}
-viewport={{ once: true, amount: 0.2 }}
+viewport={{ once: false, amount: 0.35}}
 transition={{
 duration: 0.45,
 delay: index * 0.08,
@@ -516,7 +516,7 @@ background:"#16a34a"
 className="suggestion-card"
 initial={{ opacity: 0 }}
 whileInView={{ opacity: 1 }}
-viewport={{ once: true }}
+viewport={{ once: false, amount: 0.2 }}
 transition={{ duration: 0.4 }}
 >
 <div
@@ -549,7 +549,7 @@ background:"#16a34a"
         className="suggestion-card"
         initial={{ opacity: 0, x: 25 }}
         whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
+        viewport={{ once: false, amount: 0.2 }}
         transition={{
           duration: 0.45,
           delay: index * 0.08,
@@ -570,7 +570,7 @@ background:"#16a34a"
 className="suggestion-card"
 initial={{ opacity: 0 }}
 whileInView={{ opacity: 1 }}
-viewport={{ once: true }}
+viewport={{  once: false, amount: 0.2 }}
 transition={{ duration: 0.4 }}
 >
 <div className="suggestion-number">
