@@ -317,17 +317,16 @@ className="skill-chip danger"
 
 <div className="progress-bar">
 
-<div
-
-className="progress-fill"
-
-style={{
-
-width:`${jobResult.keywordMatch}%`
-
-}}
-
-></div>
+<motion.div
+  className="progress-fill"
+  initial={{ width: 0 }}
+  whileInView={{ width: `${jobResult.keywordMatch}%` }}
+  viewport={{ once: true }}
+  transition={{
+    duration: 1.2,
+    ease: "easeOut",
+  }}
+/>
 
 </div>
 
@@ -406,12 +405,18 @@ marginTop:"10px"
               </div>
 
               <div className="progress-bar">
-                <div
-                  className="progress-fill"
-                  style={{
-                    width: `${skills}%`,
-                  }}
-                ></div>
+              
+<motion.div
+  className="progress-fill"
+  initial={{ width: 0 }}
+  whileInView={{ width: `${skills}%` }}
+  viewport={{ once: true }}
+  transition={{
+    duration: 1.2,
+    ease: "easeOut",
+  }}
+/>
+
               </div>
             </div>
 
@@ -422,12 +427,17 @@ marginTop:"10px"
               </div>
 
               <div className="progress-bar">
-                <div
-                  className="progress-fill"
-                  style={{
-                    width: `${formatting}%`,
-                  }}
-                ></div>
+             <motion.div
+  className="progress-fill"
+  initial={{ width: 0 }}
+  whileInView={{ width: `${formatting}%` }}
+  viewport={{ once: true }}
+  transition={{
+    duration: 1.2,
+    ease: "easeOut",
+    delay: 0.15,
+  }}
+/>
               </div>
             </div>
 
@@ -438,12 +448,17 @@ marginTop:"10px"
               </div>
 
               <div className="progress-bar">
-                <div
-                  className="progress-fill"
-                  style={{
-                    width: `${keywords}%`,
-                  }}
-                ></div>
+             <motion.div
+  className="progress-fill"
+  initial={{ width: 0 }}
+  whileInView={{ width: `${keywords}%` }}
+  viewport={{ once: true }}
+  transition={{
+    duration: 1.2,
+    ease: "easeOut",
+    delay: 0.3,
+  }}
+/>
               </div>
             </div>
 
@@ -581,7 +596,7 @@ No strengths available.
 >
   <span>＋</span>
   Analyze Another Resume
-  
+
 </button>
         </div>
       </div>
