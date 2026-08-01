@@ -13,7 +13,6 @@ const fs = require("fs");
 const pdf = require("pdf-parse");connectDB();
 const analyzeJobMatch = require("./services/jobMatch");
 const analyzeResume = require("./services/gemini");
-const API = import.meta.env.VITE_API_URL;
 app.use(cors());
 app.use(express.json());
 
