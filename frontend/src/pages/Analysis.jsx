@@ -44,8 +44,7 @@ const analyzeJob = async () => {
     setLoadingJD(true);
 
     const res = await axios.post(
-      "http://localhost:3000/api/analyze-job",
-      {
+      `${API}/api/analyze-job`,      {
         resumeId: resume._id,
         jobDescription,
       }

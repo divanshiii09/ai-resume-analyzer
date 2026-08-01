@@ -49,7 +49,7 @@ try {
 setError("");
 
 const response = await axios.post(
-  "http://localhost:3000/api/register",
+  `${API}/api/register`,
   {
     name,
     email,

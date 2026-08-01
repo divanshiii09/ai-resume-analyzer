@@ -88,8 +88,7 @@ async function handleAnalyzeResume() {
     );
 
     const response = await axios.post(
-      "http://localhost:3000/api/resume",
-      formData,
+      `${API}/api/resume`,      formData,
       {
         headers: {
           "Content-Type": "multipart/form-data",
