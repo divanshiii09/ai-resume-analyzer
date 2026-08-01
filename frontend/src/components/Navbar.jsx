@@ -24,10 +24,9 @@ localStorage.getItem(
 );
 
 
-  const response =
-    await axios.get(
-      `http://localhost:3000/api/resume/latest/${email}`
-    );
+  const response = await axios.get(
+  `https://ai-resume-analyzer-ehb.onrender.com/api/resume/latest/${email}`
+);
 
   if (
     response.data &&

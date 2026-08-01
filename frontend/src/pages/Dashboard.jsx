@@ -25,8 +25,7 @@ localStorage.getItem("userEmail");
 useEffect(() => {
 axios
 .get(
-`http://localhost:3000/api/resumes/${userEmail}`
-)
+`${API}/api/resumes/${userEmail}`)
 .then((res) => {
 setResumes(res.data);
 })

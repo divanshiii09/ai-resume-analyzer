@@ -18,8 +18,7 @@ const [loadingJD, setLoadingJD] = useState(false);
     const email = localStorage.getItem("userEmail");
 
     axios
-      .get(`http://localhost:3000/api/resumes/${email}`)
-      .then((res) => {
+.get(`https://YOUR-RENDER-URL.onrender.com/api/resumes/${email}`)      .then((res) => {
         setAllResumes(res.data);
       })
       .catch(console.log);
@@ -27,8 +26,7 @@ const [loadingJD, setLoadingJD] = useState(false);
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/api/resume/${id}`)
-      .then((res) => {
+.get(`https://YOUR-RENDER-URL.onrender.com/api/resume/${id}`)      .then((res) => {
         setResume(res.data);
       })
       .catch(console.log);
