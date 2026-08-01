@@ -11,7 +11,7 @@ import {
 
 function Dashboard() {
 const navigate = useNavigate();
-
+const API = import.meta.env.VITE_API_URL;
 const [resumes, setResumes] = useState([]);
 const [highlightedResume, setHighlightedResume] =
 useState(null);
@@ -62,9 +62,9 @@ const handleDelete = async (id) => {
   if (!confirmDelete) return;
 
   try {
-    await axios.delete(
-      `http://localhost:3000/api/resume/${id}`
-    );
+  await axios.delete(
+  `https://YOUR-RENDER-URL.onrender.com/api/resume/${id}`
+);
 
     setResumes((prev) => {
   const updated = prev.filter(
@@ -272,10 +272,9 @@ className="resume-icon-btn"
 onClick={(e)=>{
 e.stopPropagation();
 
-const fileUrl = `http://localhost:3000/${resume.filePath
+const fileUrl = `${API}/${resume.filePath
   .replace(/\\/g, "/")
-  .replace(/^\/+/, "")}`;
-
+.replace(/^\/+/, "")}`;
 window.open(fileUrl, "_blank");
 }}
 >
