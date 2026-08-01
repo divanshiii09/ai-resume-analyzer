@@ -88,7 +88,8 @@ async function handleAnalyzeResume() {
     );
 
     const response = await axios.post(
-      `${API}/api/resume`,      formData,
+      "https://ai-resume-analyzer-ehbq.onrender.com/api/resume",
+      formData,
       {
         headers: {
           "Content-Type": "multipart/form-data",

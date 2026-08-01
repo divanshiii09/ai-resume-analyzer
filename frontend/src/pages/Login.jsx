@@ -18,7 +18,8 @@ setError("");
 
 
   const response = await axios.post(
-`${API}/api/login`,    {
+"https://ai-resume-analyzer-ehbq.onrender.com/api/login",
+   {
       email,
       password,
     }

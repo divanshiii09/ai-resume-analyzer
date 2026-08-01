@@ -49,7 +49,7 @@ try {
 setError("");
 
 const response = await axios.post(
-  `${API}/api/register`,
+  "https://ai-resume-analyzer-ehbq.onrender.com/api/register",
   {
     name,
     email,
