@@ -13,46 +13,40 @@ const [jobResult, setJobResult] = useState(null);
 const [loadingJD, setLoadingJD] = useState(false);
   const [resume, setResume] = useState(null);
   const [allResumes, setAllResumes] = useState([]);
+const API = import.meta.env.VITE_API_URL;
 
-  useEffect(() => {
-    const email = localStorage.getItem("userEmail");
+ useEffect(() => {
+  const email = localStorage.getItem("userEmail");
 
-    axios
-      .get(`http://localhost:3000/api/resumes/${email}`)
-      .then((res) => {
-        setAllResumes(res.data);
-      })
-      .catch(console.log);
-  }, []);
+  axios
+    .get(`${API}/api/resumes/${email}`)
+    .then((res) => {
+      setAllResumes(res.data);
+    })
+    .catch(console.log);
+}, []);
 
-  useEffect(() => {
-    axios
-      .get(`http://localhost:3000/api/resume/${id}`)
-      .then((res) => {
-        setResume(res.data);
-      })
-      .catch(console.log);
-  }, [id]);
+useEffect(() => {
+  axios
+    .get(`${API}/api/resume/${id}`)
+    .then((res) => {
+      setResume(res.data);
+    })
+    .catch(console.log);
+}, [id]);
+
 const analyzeJob = async () => {
-  if (loadingJD) return;
-  if (!jobDescription.trim()) {
-    alert("Please paste a Job Description.");
-    return;
-  }
+  if (!resume) return;
 
   try {
     setLoadingJD(true);
 
-    const res = await axios.post(
-      "http://localhost:3000/api/analyze-job",
-      {
-        resumeId: resume._id,
-        jobDescription,
-      }
-    );
+    const res = await axios.post("http://localhost:3000/api/analyze-job", {
+      resumeId: resume._id,
+      jobDescription,
+    });
 
     setJobResult(res.data);
-
   } catch (err) {
     console.log(err);
     alert("Failed to analyze Job Description.");
@@ -60,6 +54,7 @@ const analyzeJob = async () => {
     setLoadingJD(false);
   }
 };
+
   if (!resume) {
     return (
       <>
@@ -376,9 +371,9 @@ marginTop:"10px"
         ✓
       </div>
 
-      <div className="suggestion-text">
-        {item}
-      </div>
+    <div className="suggestion-text">
+  No strengths available.
+</div>
     </motion.div>
   ))
 ) : (
@@ -514,7 +509,7 @@ background:"#16a34a"
 
 <div className="suggestion-text">
 
-{item}
+No strengths available.
 
 </div>
 
@@ -541,9 +536,7 @@ background:"#16a34a"
 </div>
 
 <div className="suggestion-text">
-
-{item}
-
+  No strengths available.
 </div>
 
 </motion.div>  )}
@@ -571,8 +564,8 @@ background:"#16a34a"
         </div>
 
         <div className="suggestion-text">
-          {item}
-        </div>
+  No suggestions available.
+</div>
     </motion.div>
     ))
   ) : (
