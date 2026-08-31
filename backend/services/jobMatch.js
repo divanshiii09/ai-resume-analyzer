@@ -15,7 +15,10 @@ async function analyzeJobMatch(resumeText, jobDescription) {
           // Ask for strict JSON so the fenced-code stripping below becomes a
           // fallback rather than the primary parse path.
           responseMimeType: "application/json",
-          maxOutputTokens: 4096,
+          // gemini-2.5-flash charges internal reasoning against this budget,
+          // so a tight cap truncates the JSON body mid-string. The request
+          // timeout above is what actually bounds latency.
+          maxOutputTokens: 16384,
         },
       },
       { timeout: GEMINI_TIMEOUT_MS }
@@ -218,7 +221,16 @@ const cleaned = response
   .replace(/`(.*?)`/g, "$1")         // `code`
   .trim();
   
-    return JSON.parse(cleaned);
+    try {
+      return JSON.parse(cleaned);
+    } catch (parseErr) {
+      const finishReason = result.response.candidates?.[0]?.finishReason;
+      console.error(
+        `Gemini JSON parse failed (finishReason=${finishReason}, ` +
+          `${cleaned.length} chars). Tail: ${JSON.stringify(cleaned.slice(-160))}`
+      );
+      throw parseErr;
+    }
 
   } catch (err) {
 
