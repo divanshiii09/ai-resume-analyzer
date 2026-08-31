@@ -540,7 +540,7 @@ background:"#16a34a"
 
 <div className="suggestion-text">
 
-{item}
+No strengths available.
 
 </div>
 
@@ -589,7 +589,7 @@ transition={{ duration: 0.4 }}
 
 <div className="suggestion-text">
 
-No strengths available.
+No suggestions available.
 
 </div>
 
