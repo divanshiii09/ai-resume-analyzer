@@ -12,9 +12,31 @@ const resumeSchema = new mongoose.Schema(
       required: true,
     },
 
+    // LEGACY. Documents created before the Vercel migration hold
+    // "/uploads/<name>" here and have no fileData. No longer required, and
+    // never written by new uploads -- kept so old documents still validate.
     filePath: {
       type: String,
-      required: true,
+    },
+
+    // Original PDF bytes. select:false is the important part: it keeps the
+    // buffer out of every query result unless explicitly requested, so the
+    // dashboard list route does not return megabytes of base64 per resume.
+    fileData: {
+      type: Buffer,
+      select: false,
+    },
+
+    contentType: {
+      type: String,
+      default: "application/pdf",
+    },
+
+    // Lets the client know whether an original file exists WITHOUT selecting
+    // the buffer. 0 means a legacy document -- hide the "Resume" button.
+    fileSize: {
+      type: Number,
+      default: 0,
     },
 
     userEmail: {
@@ -108,5 +130,7 @@ const resumeSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+resumeSchema.index({ userEmail: 1, createdAt: -1 });
 
 module.exports = mongoose.model("Resume", resumeSchema);

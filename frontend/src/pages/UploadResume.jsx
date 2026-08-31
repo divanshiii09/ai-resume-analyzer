@@ -1,8 +1,10 @@
 import { useState } from "react";
-import axios from "axios";
+import api from "../api/client";
 import "../styles/UploadResume.css";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
+
+const MAX_FILE_BYTES = 4 * 1024 * 1024;
 
 function UploadResume() {
 const [selectedFile, setSelectedFile] = useState(null);
@@ -12,17 +14,21 @@ const [isUploading, setIsUploading] = useState(false);
 const navigate = useNavigate();
 
 function validateFile(file) {
-const allowedTypes = [
-"application/pdf",
-"application/msword",
-"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-];
+// PDF only: the analyzer extracts text with pdf-parse, which cannot
+// read DOC or DOCX.
+if (file.type !== "application/pdf") {
+  setError("Only PDF files are allowed.");
 
+  setSelectedFile(null);
 
-if (!allowedTypes.includes(file.type)) {
-  setError(
-    "Only PDF, DOC and DOCX files are allowed."
-  );
+  return false;
+}
+
+// Vercel caps a serverless function request body at roughly 4.5 MB, and a
+// larger file is rejected at the edge before the server can explain why.
+// Catch it here so the user gets a clear message immediately.
+if (file.size > MAX_FILE_BYTES) {
+  setError("File is too large. Maximum size is 4 MB.");
 
   setSelectedFile(null);
 
@@ -76,31 +82,29 @@ async function handleAnalyzeResume() {
   try {
     setIsUploading(true);
 
-    const userEmail = localStorage.getItem("userEmail");
-
     const formData = new FormData();
 
+    // The server takes the owner from the verified token, so no userEmail
+    // field is sent. Let the browser set Content-Type: it needs to add the
+    // multipart boundary, which a hand-written header cannot supply.
     formData.append("resume", selectedFile);
-    formData.append("userEmail", userEmail);
-    formData.append(
-      "atsScore",
-      Math.floor(Math.random() * (95 - 70 + 1)) + 70
-    );
 
-    const response = await axios.post(
-      "https://ai-resume-analyzer-ehbq.onrender.com/api/resume",
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await api.post("/api/resume", formData, {
+      // Slightly above the function's maxDuration so the browser does not give
+      // up before the server has had a chance to respond.
+      timeout: 65000,
+    });
 
     navigate(`/analysis/${response.data.resume._id}`);
   } catch (error) {
     console.log(error);
-    alert("Failed to save resume");
+
+    // The server returns specific messages now (unreadable PDF, too large,
+    // wrong type), so show those instead of a generic failure.
+    setError(
+      error.response?.data?.message ||
+        "Failed to analyze resume. Please try again."
+    );
   } finally {
     setIsUploading(false);
   }
@@ -148,7 +152,7 @@ return (
         </label>
 
         <small>
-          Supported: PDF, DOC, DOCX
+          Supported: PDF (max 4 MB)
         </small>
 
         {error && (

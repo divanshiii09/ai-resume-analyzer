@@ -2,7 +2,7 @@ import "../styles/Analysis.css";
 import Navbar from "../components/Navbar";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api/client";
 import { motion } from "framer-motion";
 
 function Analysis() {
@@ -17,22 +17,25 @@ const [loadingJD, setLoadingJD] = useState(false);
   useEffect(() => {
     const email = localStorage.getItem("userEmail");
 
-    axios
-.get(`https://YOUR-RENDER-URL.onrender.com/api/resumes/${email}`)      .then((res) => {
+    api
+      .get(`/api/resumes/${email}`)
+      .then((res) => {
         setAllResumes(res.data);
       })
       .catch(console.log);
   }, []);
 
   useEffect(() => {
-    axios
-.get(`https://YOUR-RENDER-URL.onrender.com/api/resume/${id}`)      .then((res) => {
+    api
+      .get(`/api/resume/${id}`)
+      .then((res) => {
         setResume(res.data);
       })
       .catch(console.log);
   }, [id]);
 const analyzeJob = async () => {
   if (loadingJD) return;
+  if (!resume) return;
   if (!jobDescription.trim()) {
     alert("Please paste a Job Description.");
     return;
@@ -41,13 +44,10 @@ const analyzeJob = async () => {
   try {
     setLoadingJD(true);
 
-    const res = await axios.post(
-      "https://ai-resume-analyzer-ehbq.onrender.com/api/analyze-job",
-     {
-        resumeId: resume._id,
-        jobDescription,
-      }
-    );
+    const res = await api.post("/api/analyze-job", {
+      resumeId: resume._id,
+      jobDescription,
+    });
 
     setJobResult(res.data);
 
@@ -540,7 +540,7 @@ background:"#16a34a"
 
 <div className="suggestion-text">
 
-{item}
+No strengths available.
 
 </div>
 
@@ -589,7 +589,7 @@ transition={{ duration: 0.4 }}
 
 <div className="suggestion-text">
 
-No strengths available.
+No suggestions available.
 
 </div>
 

@@ -2,11 +2,24 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
+// Kept below the platform function timeout so a slow generation surfaces as a
+// real error message from the catch block rather than an opaque platform 504.
+const GEMINI_TIMEOUT_MS = Number(process.env.GEMINI_TIMEOUT_MS || 45000);
+
 async function analyzeJobMatch(resumeText, jobDescription) {
   try {
-    const model = genAI.getGenerativeModel({
-      model: "gemini-2.5-flash",
-    });
+    const model = genAI.getGenerativeModel(
+      {
+        model: "gemini-2.5-flash",
+        generationConfig: {
+          // Ask for strict JSON so the fenced-code stripping below becomes a
+          // fallback rather than the primary parse path.
+          responseMimeType: "application/json",
+          maxOutputTokens: 4096,
+        },
+      },
+      { timeout: GEMINI_TIMEOUT_MS }
+    );
 
 const prompt = `
 You are an ATS (Applicant Tracking System).
@@ -195,9 +208,6 @@ ${jobDescription}
 
     const response = result.response.text();
 
-    console.log("========== JOB MATCH ==========");
-    console.log(response);
-    console.log("===============================");
 
 const cleaned = response
   .replace(/```json/g, "")
