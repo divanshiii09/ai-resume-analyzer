@@ -1,4 +1,8 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+const {
+  parseModelJson,
+  stripMarkdownDeep,
+} = require("./parseModelJson");
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
@@ -212,22 +216,14 @@ ${jobDescription}
     const response = result.response.text();
 
 
-const cleaned = response
-  .replace(/```json/g, "")
-  .replace(/```/g, "")
-  .replace(/\*\*(.*?)\*\*/g, "$1")   // **bold**
-  .replace(/__(.*?)__/g, "$1")       // __bold__
-  .replace(/\*(.*?)\*/g, "$1")       // *italic*
-  .replace(/`(.*?)`/g, "$1")         // `code`
-  .trim();
-  
     try {
-      return JSON.parse(cleaned);
+      // Markdown is stripped per string AFTER parsing, never over raw JSON.
+      return stripMarkdownDeep(parseModelJson(response));
     } catch (parseErr) {
       console.error(
         `Gemini JSON parse failed (finishReason=` +
           `${result.response.candidates?.[0]?.finishReason}, ` +
-          `${cleaned.length} chars). Tail: ${JSON.stringify(cleaned.slice(-160))}`
+          `${response.length} chars). Tail: ${JSON.stringify(response.slice(-160))}`
       );
       throw parseErr;
     }

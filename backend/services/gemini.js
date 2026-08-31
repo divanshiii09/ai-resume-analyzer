@@ -1,4 +1,5 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+const { parseModelJson } = require("./parseModelJson");
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
@@ -136,21 +137,16 @@ ${text}
 
     const response = result.response.text();
 
-    const cleaned = response
-      .replace(/```json/g, "")
-      .replace(/```/g, "")
-      .trim();
-
     let parsed;
     try {
-      parsed = JSON.parse(cleaned);
+      parsed = parseModelJson(response);
     } catch (parseErr) {
-      // A truncated response would otherwise fall through to the generic
-      // fallback object, hiding the real cause. Say what happened.
+      // Otherwise this falls through to the generic fallback object and looks
+      // like poor model output rather than a parse failure.
       console.error(
         `Gemini JSON parse failed (finishReason=` +
           `${result.response.candidates?.[0]?.finishReason}, ` +
-          `${cleaned.length} chars). Tail: ${JSON.stringify(cleaned.slice(-160))}`
+          `${response.length} chars). Tail: ${JSON.stringify(response.slice(-160))}`
       );
       throw parseErr;
     }
