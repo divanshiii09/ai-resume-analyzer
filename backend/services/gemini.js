@@ -15,7 +15,10 @@ async function analyzeResume(text) {
           // Ask for strict JSON so the fenced-code stripping below becomes a
           // fallback rather than the primary parse path.
           responseMimeType: "application/json",
-          maxOutputTokens: 4096,
+          // gemini-2.5-flash charges internal reasoning against this budget,
+          // so a tight cap truncates the JSON body mid-string. The request
+          // timeout above is what actually bounds latency.
+          maxOutputTokens: 16384,
         },
       },
       { timeout: GEMINI_TIMEOUT_MS }
@@ -138,7 +141,19 @@ ${text}
       .replace(/```/g, "")
       .trim();
 
-    const parsed = JSON.parse(cleaned);
+    let parsed;
+    try {
+      parsed = JSON.parse(cleaned);
+    } catch (parseErr) {
+      // A truncated response would otherwise fall through to the generic
+      // fallback object, hiding the real cause. Say what happened.
+      console.error(
+        `Gemini JSON parse failed (finishReason=` +
+          `${result.response.candidates?.[0]?.finishReason}, ` +
+          `${cleaned.length} chars). Tail: ${JSON.stringify(cleaned.slice(-160))}`
+      );
+      throw parseErr;
+    }
 const cleanText = (text = "") =>
   typeof text === "string"
     ? text
