@@ -1,0 +1,16 @@
+node_modules/
+dist/
+build/
+
+.env
+.env.local
+.env.*.local
+
+.vercel/
+
+# legacy: uploads used to be written to disk; now stored in MongoDB
+uploads/
+
+.DS_Store
+*.log
+npm-debug.log*

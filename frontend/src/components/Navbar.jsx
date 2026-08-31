@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../api/client";
 import "../styles/Navbar.css";
 
 function Navbar() {
@@ -24,9 +24,10 @@ localStorage.getItem(
 );
 
 
-  const response = await axios.get(
-  `https://ai-resume-analyzer-ehb.onrender.com/api/resume/latest/${email}`
-);
+  const response =
+    await api.get(
+      `/api/resume/latest/${email}`
+    );
 
   if (
     response.data &&
