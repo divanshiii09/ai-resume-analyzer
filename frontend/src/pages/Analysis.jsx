@@ -13,28 +13,33 @@ const [jobResult, setJobResult] = useState(null);
 const [loadingJD, setLoadingJD] = useState(false);
   const [resume, setResume] = useState(null);
   const [allResumes, setAllResumes] = useState([]);
- useEffect(() => {
-  const email = localStorage.getItem("userEmail");
 
-  api
-    .get(`/api/resumes/${email}`)
-    .then((res) => {
-      setAllResumes(res.data);
-    })
-    .catch(console.log);
-}, []);
+  useEffect(() => {
+    const email = localStorage.getItem("userEmail");
 
-useEffect(() => {
-  api
-    .get(`/api/resume/${id}`)
-    .then((res) => {
-      setResume(res.data);
-    })
-    .catch(console.log);
-}, [id]);
+    api
+      .get(`/api/resumes/${email}`)
+      .then((res) => {
+        setAllResumes(res.data);
+      })
+      .catch(console.log);
+  }, []);
 
+  useEffect(() => {
+    api
+      .get(`/api/resume/${id}`)
+      .then((res) => {
+        setResume(res.data);
+      })
+      .catch(console.log);
+  }, [id]);
 const analyzeJob = async () => {
+  if (loadingJD) return;
   if (!resume) return;
+  if (!jobDescription.trim()) {
+    alert("Please paste a Job Description.");
+    return;
+  }
 
   try {
     setLoadingJD(true);
@@ -45,6 +50,7 @@ const analyzeJob = async () => {
     });
 
     setJobResult(res.data);
+
   } catch (err) {
     console.log(err);
     alert("Failed to analyze Job Description.");
@@ -52,7 +58,6 @@ const analyzeJob = async () => {
     setLoadingJD(false);
   }
 };
-
   if (!resume) {
     return (
       <>
@@ -369,9 +374,9 @@ marginTop:"10px"
         ✓
       </div>
 
-    <div className="suggestion-text">
-  No strengths available.
-</div>
+      <div className="suggestion-text">
+        {item}
+      </div>
     </motion.div>
   ))
 ) : (
@@ -507,7 +512,7 @@ background:"#16a34a"
 
 <div className="suggestion-text">
 
-No strengths available.
+{item}
 
 </div>
 
@@ -534,7 +539,9 @@ background:"#16a34a"
 </div>
 
 <div className="suggestion-text">
-  No strengths available.
+
+{item}
+
 </div>
 
 </motion.div>  )}
@@ -562,8 +569,8 @@ background:"#16a34a"
         </div>
 
         <div className="suggestion-text">
-  No suggestions available.
-</div>
+          {item}
+        </div>
     </motion.div>
     ))
   ) : (
