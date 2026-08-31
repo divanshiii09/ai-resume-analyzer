@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../api/client";
 import "../styles/Navbar.css";
 
 function Navbar() {
@@ -25,8 +25,8 @@ localStorage.getItem(
 
 
   const response =
-    await axios.get(
-      `http://localhost:3000/api/resume/latest/${email}`
+    await api.get(
+      `/api/resume/latest/${email}`
     );
 
   if (

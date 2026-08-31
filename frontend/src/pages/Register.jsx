@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../api/client";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "../styles/Login.css";
 
@@ -48,8 +48,8 @@ return;
 try {
 setError("");
 
-const response = await axios.post(
-  "http://localhost:3000/api/register",
+const response = await api.post(
+  "/api/register",
   {
     name,
     email,

@@ -2,7 +2,7 @@ import "../styles/Analysis.css";
 import Navbar from "../components/Navbar";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api/client";
 import { motion } from "framer-motion";
 
 function Analysis() {
@@ -13,13 +13,11 @@ const [jobResult, setJobResult] = useState(null);
 const [loadingJD, setLoadingJD] = useState(false);
   const [resume, setResume] = useState(null);
   const [allResumes, setAllResumes] = useState([]);
-const API = import.meta.env.VITE_API_URL;
-
  useEffect(() => {
   const email = localStorage.getItem("userEmail");
 
-  axios
-    .get(`${API}/api/resumes/${email}`)
+  api
+    .get(`/api/resumes/${email}`)
     .then((res) => {
       setAllResumes(res.data);
     })
@@ -27,8 +25,8 @@ const API = import.meta.env.VITE_API_URL;
 }, []);
 
 useEffect(() => {
-  axios
-    .get(`${API}/api/resume/${id}`)
+  api
+    .get(`/api/resume/${id}`)
     .then((res) => {
       setResume(res.data);
     })
@@ -41,7 +39,7 @@ const analyzeJob = async () => {
   try {
     setLoadingJD(true);
 
-    const res = await axios.post("http://localhost:3000/api/analyze-job", {
+    const res = await api.post("/api/analyze-job", {
       resumeId: resume._id,
       jobDescription,
     });

@@ -1,7 +1,7 @@
 import "../styles/Dashboard.css";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api, { openResumeFile } from "../api/client";
 import Navbar from "../components/Navbar";
 import {
   FiBarChart2,
@@ -23,9 +23,9 @@ const userEmail =
 localStorage.getItem("userEmail");
 
 useEffect(() => {
-axios
+api
 .get(
-`http://localhost:3000/api/resumes/${userEmail}`
+`/api/resumes/${userEmail}`
 )
 .then((res) => {
 setResumes(res.data);
@@ -63,8 +63,8 @@ const handleDelete = async (id) => {
   if (!confirmDelete) return;
 
   try {
-    await axios.delete(
-      `http://localhost:3000/api/resume/${id}`
+    await api.delete(
+      `/api/resume/${id}`
     );
 
     setResumes((prev) => {
@@ -268,21 +268,24 @@ className={`resume-card interactive-card ${      highlightedResume === resume._i
 
 <div className="resume-actions">
 
+{resume.fileSize > 0 && (
 <button
 className="resume-icon-btn"
-onClick={(e)=>{
+onClick={async (e)=>{
 e.stopPropagation();
 
-const fileUrl = `http://localhost:3000/${resume.filePath
-  .replace(/\\/g, "/")
-  .replace(/^\/+/, "")}`;
-
-window.open(fileUrl, "_blank");
+try {
+  await openResumeFile(resume._id);
+} catch (err) {
+  console.log(err);
+  alert("Could not open the original file.");
+}
 }}
 >
 <FiFileText />
 <span>Resume</span>
 </button>
+)}
 
 <button
 className="resume-icon-btn"
