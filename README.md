@@ -31,14 +31,14 @@ ResumeAI checks a resume the way an Applicant Tracking System (ATS) would. You u
 | Database | MongoDB Atlas with Mongoose |
 | AI | Google Gemini (`gemini-2.5-flash`) via `@google/generative-ai` |
 | Auth | bcryptjs, JSON Web Tokens |
-| File handling | Multer (in-memory), pdf-parse |
+| File handling | Multer (in-memory), unpdf |
 | Hosting | Vercel (static frontend and a serverless API function) |
 | Testing | Node's built-in test runner (`node --test`) |
 
 ## How it works
 
 ```
-PDF upload ──► Express API ──► pdf-parse extracts text
+PDF upload ──► Express API ──► unpdf extracts text   
                                    │
                                    ▼
                      Gemini analyzes the text and returns JSON
@@ -51,7 +51,7 @@ PDF upload ──► Express API ──► pdf-parse extracts text
 ```
 
 1. The user logs in and receives a JWT, which is sent with every API request.
-2. The uploaded PDF is kept in memory (never written to disk), and its text is extracted.
+2. The uploaded PDF is kept in memory (never written to disk), and its text is extracted with unpdf.
 3. The text is sent to Gemini with a strict prompt that asks for JSON only.
 4. The reply is parsed by taking everything from the first `{` to the last `}`. This copes with code fences or extra text around the JSON. Markdown such as `**bold**` is then stripped from each string.
 5. The result and the PDF are stored in MongoDB, linked to the user's email.
@@ -104,7 +104,7 @@ All routes except register, login and the health check need an `Authorization: B
 
 ## Running it locally
 
-**Requirements:** Node.js 22 or newer, a MongoDB Atlas database, and a Gemini API key from [Google AI Studio](https://aistudio.google.com/apikey).
+**Requirements:** Node.js 24 or newer, a MongoDB Atlas database, and a Gemini API key from [Google AI Studio](https://aistudio.google.com/apikey).
 
 1. Install dependencies from the project root:
 

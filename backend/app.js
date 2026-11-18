@@ -6,10 +6,6 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
 
-// Require the internal module directly rather than the pdf-parse wrapper: the
-// wrapper's `!module.parent` debug self-test reads a fixture PDF off disk and
-// crashes when the module graph is bundled.
-const pdf = require("pdf-parse/lib/pdf-parse.js");
 
 const connectDB = require("./config/db");
 const upload = require("./middleware/upload");
@@ -19,6 +15,7 @@ const User = require("./models/User");
 const Resume = require("./models/Resume");
 const analyzeResume = require("./services/gemini");
 const analyzeJobMatch = require("./services/jobMatch");
+const extractPdfText = require("./services/extractPdfText");
 
 const app = express();
 
@@ -147,8 +144,16 @@ app.post(
       const userEmail = req.user.email;
 
       // multer's memoryStorage already gave us the bytes -- no disk read.
-      const pdfData = await pdf(req.file.buffer);
-      const extractedText = (pdfData.text || "").trim();
+      let extractedText;
+      try {
+        extractedText = await extractPdfText(req.file.buffer);
+      } catch (err) {
+        console.error("PDF text extraction failed:", err.message);
+        return res.status(422).json({
+          message:
+            "Could not read this PDF. Try exporting it again as a standard PDF.",
+        });
+      }
 
       if (!extractedText) {
         return res.status(422).json({
