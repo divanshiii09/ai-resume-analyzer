@@ -2,7 +2,7 @@
 
 ResumeAI checks a resume the way an Applicant Tracking System (ATS) would. You upload a PDF resume and get an ATS score, a skills and formatting breakdown, and concrete suggestions. You can also paste any job description to see how well your resume matches that specific role.
 
-**Live demo:** _add your Vercel link here_
+**Live demo:** https://ai-ats-resume-analyzer-sigma.vercel.app
 
 ## Features
 
