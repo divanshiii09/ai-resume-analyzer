@@ -237,10 +237,21 @@ app.post("/api/analyze-job", requireAuth, async (req, res, next) => {
       return res.status(403).json({ message: "Not your resume" });
     }
 
-    const result = await analyzeJobMatch(
-      (resume.resumeText || "").slice(0, 20000),
-      jobDescription.slice(0, 8000)
-    );
+    let result;
+    try {
+      result = await analyzeJobMatch(
+        (resume.resumeText || "").slice(0, 20000),
+        jobDescription.slice(0, 8000)
+      );
+    } catch (err) {
+      if (err.code === "JOB_MATCH_FAILED") {
+        return res.status(502).json({
+          message:
+            "The AI couldn't analyze this job description right now. Please try again in a moment.",
+        });
+      }
+      throw err;
+    }
 
     res.json(result);
   } catch (error) {

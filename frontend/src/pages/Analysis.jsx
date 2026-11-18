@@ -11,6 +11,7 @@ function Analysis() {
 const [jobDescription, setJobDescription] = useState("");
 const [jobResult, setJobResult] = useState(null);
 const [loadingJD, setLoadingJD] = useState(false);
+const [jdError, setJdError] = useState("");
   const [resume, setResume] = useState(null);
   const [allResumes, setAllResumes] = useState([]);
 
@@ -43,6 +44,7 @@ const analyzeJob = async () => {
 
   try {
     setLoadingJD(true);
+    setJdError("");
 
     const res = await api.post("/api/analyze-job", {
       resumeId: resume._id,
@@ -53,7 +55,11 @@ const analyzeJob = async () => {
 
   } catch (err) {
     console.log(err);
-    alert("Failed to analyze Job Description.");
+    setJobResult(null);
+    setJdError(
+      err.response?.data?.message ||
+        "Couldn't analyze the job description. Please try again."
+    );
   } finally {
     setLoadingJD(false);
   }
@@ -226,6 +232,15 @@ ease:"easeOut"
   )}
 </button>
 
+{jdError && !loadingJD && (
+  <div className="jd-error" role="alert">
+    <span>{jdError}</span>
+    <button type="button" className="jd-retry-btn" onClick={analyzeJob}>
+      Try again
+    </button>
+  </div>
+)}
+
 </div>
 
 {/* ================= RESULTS ================= */}
@@ -234,28 +249,80 @@ ease:"easeOut"
 
 <div className="jd-result-card">
 
-  <h2>
-    Job Match Result
-  </h2>
+  {(() => {
+    const overall = Number(jobResult.overallMatch) || 0;
+    const tier = overall >= 80 ? "excellent" : overall >= 60 ? "good" : "poor";
+    const matched = jobResult.matchingSkills?.length || 0;
+    const missing = jobResult.missingSkills?.length || 0;
+    const r = 64;
+    const c = 2 * Math.PI * r;
 
-  <div className="jd-score">
+    return (
+      <div className={`jm-hero tier-${tier}`}>
 
-    <h1>{jobResult.overallMatch}%</h1>
+        <div className="jm-ring">
+          <svg viewBox="0 0 160 160">
+            <circle cx="80" cy="80" r={r} className="jm-ring-bg" />
+            <motion.circle
+              cx="80"
+              cy="80"
+              r={r}
+              className="jm-ring-progress"
+              strokeDasharray={c}
+              initial={{ strokeDashoffset: c }}
+              animate={{ strokeDashoffset: c - (overall / 100) * c }}
+              transition={{ duration: 1.1, ease: "easeOut" }}
+            />
+          </svg>
+          <div className="jm-ring-value">
+            <strong>{overall}%</strong>
+            <span>Match</span>
+          </div>
+        </div>
 
-<span
-className={`match-status ${
-jobResult.overallMatch>=80
-? "excellent"
-: jobResult.overallMatch>=60
-? "good"
-: "poor"
-}`}
->
+        <div className="jm-hero-info">
+          <h2>Job Match Result</h2>
 
-{jobResult.recommendation}
+          <span className="jm-badge">{jobResult.recommendation}</span>
 
-</span>
-  </div>
+          {matched + missing > 0 && (
+            <>
+              <p className="jm-summary">
+                You match <b>{matched} of {matched + missing}</b> skills this role asks for.
+              </p>
+
+              <div className="jm-coverage">
+                <motion.div
+                  className="jm-coverage-fill"
+                  initial={{ width: 0 }}
+                  animate={{ width: `${(matched / (matched + missing)) * 100}%` }}
+                  transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
+                />
+              </div>
+            </>
+          )}
+        </div>
+
+        <div className="jm-stats">
+          <div className="jm-stat matched">
+            <span>Matched skills</span>
+            <strong>{matched}</strong>
+          </div>
+          <div className="jm-stat missing">
+            <span>Skills to add</span>
+            <strong>{missing}</strong>
+          </div>
+          {typeof jobResult.keywordMatch === "number" && (
+            <div className="jm-stat">
+              <span>Keyword match</span>
+              <strong>{jobResult.keywordMatch}%</strong>
+            </div>
+          )}
+        </div>
+
+      </div>
+    );
+  })()}
 
   <div className="jd-grid">
 
