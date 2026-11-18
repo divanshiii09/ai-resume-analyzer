@@ -229,33 +229,13 @@ ${jobDescription}
     }
 
   } catch (err) {
-
-    console.log(err);
-
-    return {
-      overallMatch: 0,
-      recommendation: "Needs Improvement",
-
-      matchingSkills: [],
-      missingSkills: [],
-
-      experienceGap: "Unable to analyze.",
-
-      educationMatch: "Unable to analyze.",
-
-      keywordMatch: 0,
-
-      matchedKeywords: [],
-      missingKeywords: [],
-
-      strengths: [],
-
-      weaknesses: [],
-
-      suggestions: [
-        "Unable to analyze Job Description currently."
-      ]
-    };
+    // Surface the failure to the caller instead of returning a fake 0% result
+    // that the UI would render as if it were a real score.
+    console.error("Job match analysis failed:", err.message || err);
+    const failure = new Error("Job match analysis failed");
+    failure.code = "JOB_MATCH_FAILED";
+    failure.cause = err;
+    throw failure;
   }
 }
 

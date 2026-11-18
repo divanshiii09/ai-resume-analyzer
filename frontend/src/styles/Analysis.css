@@ -1203,3 +1203,201 @@ grid-template-columns:repeat(3,1fr);
     font-weight:700;
     color:#1e293b;
 }
+.jd-error{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  margin-top:18px;
+  padding:14px 18px;
+  border-radius:12px;
+  background:#fef2f2;
+  border:1px solid #fecaca;
+  color:#b91c1c;
+  font-weight:500;
+}
+
+.jd-retry-btn{
+  flex-shrink:0;
+  padding:8px 16px;
+  border-radius:10px;
+  border:1px solid #fca5a5;
+  background:white;
+  color:#b91c1c;
+  font-weight:700;
+  font-family:inherit;
+  cursor:pointer;
+}
+
+.jd-retry-btn:hover{
+  background:#fee2e2;
+}
+
+/* ===== Job match score header ===== */
+
+.tier-excellent{ --tier-color:#16a34a; --tier-bg:#dcfce7; --tier-text:#15803d; }
+.tier-good{ --tier-color:#f59e0b; --tier-bg:#fef3c7; --tier-text:#b45309; }
+.tier-poor{ --tier-color:#ef4444; --tier-bg:#fee2e2; --tier-text:#b91c1c; }
+
+.jm-hero{
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr) 250px;
+  align-items:center;
+  gap:40px;
+  padding:32px 36px;
+  border-radius:20px;
+  background:#fff;
+  border:1px solid #edf2f7;
+}
+
+.jm-ring{
+  position:relative;
+  width:170px;
+  height:170px;
+}
+
+.jm-ring svg{
+  width:100%;
+  height:100%;
+  transform:rotate(-90deg);
+}
+
+.jm-ring-bg{
+  fill:none;
+  stroke:#e5ecff;
+  stroke-width:14;
+}
+
+.jm-ring-progress{
+  fill:none;
+  stroke:#2563eb;
+  stroke-width:14;
+  stroke-linecap:round;
+}
+
+.jm-ring-value{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+
+.jm-ring-value strong{
+  font-size:42px;
+  font-weight:800;
+  line-height:1;
+  color:#2563eb;
+}
+
+.jm-ring-value span{
+  margin-top:6px;
+  font-size:13px;
+  font-weight:600;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:#64748b;
+}
+
+.jm-hero-info{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+}
+
+.jd-result-card .jm-hero-info h2{
+  margin:0 0 12px;
+  font-size:28px;
+}
+
+.jm-badge{
+  padding:6px 14px;
+  border-radius:999px;
+  font-size:14px;
+  font-weight:700;
+  background:var(--tier-bg);
+  color:var(--tier-text);
+}
+
+.analysis-card p.jm-summary{
+  margin:18px 0 10px;
+  font-size:16px;
+  color:#475569;
+}
+
+.jm-summary b{ color:#0f172a; }
+
+.jm-coverage{
+  width:100%;
+  max-width:420px;
+  height:10px;
+  border-radius:999px;
+  background:#e2e8f0;
+  overflow:hidden;
+}
+
+.jm-coverage-fill{
+  height:100%;
+  border-radius:999px;
+  background:#2563eb;
+}
+
+.jm-stats{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  padding-left:32px;
+  border-left:1px solid #e2e8f0;
+}
+
+.jm-stat{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:12px 16px;
+  border-radius:12px;
+  background:white;
+  border:1px solid #e2e8f0;
+}
+
+.jm-stat span{
+  font-size:14px;
+  font-weight:600;
+  color:#64748b;
+}
+
+.jm-stat strong{
+  font-size:22px;
+  font-weight:800;
+  color:#2563eb;
+}
+
+.jm-stat.matched strong{ color:#16a34a; }
+.jm-stat.missing strong{ color:#dc2626; }
+
+@media(max-width:1000px){
+  .jm-hero{
+    grid-template-columns:auto minmax(0,1fr);
+  }
+  .jm-stats{
+    grid-column:1 / -1;
+    flex-direction:row;
+    padding-left:0;
+    border-left:none;
+  }
+  .jm-stat{ flex:1; }
+}
+
+@media(max-width:640px){
+  .jm-hero{
+    grid-template-columns:1fr;
+    justify-items:center;
+    text-align:center;
+    gap:24px;
+    padding:24px 20px;
+  }
+  .jm-hero-info{ align-items:center; }
+  .jm-stats{ flex-direction:column; width:100%; }
+}
